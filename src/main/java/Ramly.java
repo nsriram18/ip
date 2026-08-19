@@ -14,11 +14,11 @@ public class Ramly {
         System.out.println("What do you have in mind today?");
         System.out.println(line);
 
-        String[] store = new String[100];
+        Task[] storage = new Task[100];
+        //String[] store = new String[100];
         int count = 0;
 
         Scanner scanner = new Scanner(System.in);
-
 
         while (true) {
             String input = scanner.nextLine();
@@ -28,22 +28,28 @@ public class Ramly {
                 System.out.println("I will take my leave now. Pleasure assisting you!");
                 System.out.println(line);
                 break;
-            }
-
-            if (input.equals("list")) {
-                String s = "";
-                int c = 1;
-                for (int i = 0; i < store.length; i++) {
-                    if (store[i] == null) {
-                        continue;
-                    } else {
-                        System.out.println(c + ". " + store[i]);
-                        c++;
-                    }
+            } else if (input.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; i < count; i++) {
+                        System.out.println(i+1 + ". " + storage[i]);
                 }
                 System.out.println(line);
+            } else if (input.startsWith("mark")) {
+                int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
+                storage[taskIndex].mark();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(" " + storage[taskIndex]);
+                System.out.println(line);
+
+            } else if (input.startsWith("unmark")) {
+                int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+                storage[taskIndex].unmark();
+                System.out.println("Orite, I've marked this task as not done yet:");
+                System.out.println(" " + storage[taskIndex]);
+                System.out.println(line);
+
             } else {
-                store[count] = input;
+                storage[count] = new Task(input);
                 count++;
                 System.out.println("added: " + input);
                 System.out.println(line);
