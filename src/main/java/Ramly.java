@@ -14,7 +14,11 @@ public class Ramly {
         System.out.println("What do you have in mind today?");
         System.out.println(line);
 
+        String[] store = new String[100];
+        int count = 0;
+
         Scanner scanner = new Scanner(System.in);
+
 
         while (true) {
             String input = scanner.nextLine();
@@ -26,12 +30,26 @@ public class Ramly {
                 break;
             }
 
-            System.out.println(input);
-            System.out.println(line);
+            if (input.equals("list")) {
+                String s = "";
+                int c = 1;
+                for (int i = 0; i < store.length; i++) {
+                    if (store[i] == null) {
+                        continue;
+                    } else {
+                        System.out.println(c + ". " + store[i]);
+                        c++;
+                    }
+                }
+                System.out.println(line);
+            } else {
+                store[count] = input;
+                count++;
+                System.out.println("added: " + input);
+                System.out.println(line);
+            }
         }
-
         scanner.close();
-
     }
 
 }
