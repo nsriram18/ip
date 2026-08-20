@@ -28,49 +28,95 @@ public class Ramly {
                 System.out.println(line);
                 break;
             } else if (input.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < count; i++) {
-                        System.out.println(i+1 + "." + storage[i]);
+                if (count != 0) {
+                    System.out.println("Here are the tasks in your list:");
+                    for (int i = 0; i < count; i++) {
+                        System.out.println(i + 1 + "." + storage[i]);
+                    }
+                } else {
+                    System.out.println("You have no tasks in the list! Add some tasks to view them!");
                 }
                 System.out.println(line);
             } else if (input.startsWith("mark")) {
-                int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
-                storage[taskIndex].mark();
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(" " + storage[taskIndex]);
-                System.out.println(line);
+                try {
+                    int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
+                    storage[taskIndex].mark();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(" " + storage[taskIndex]);
+                } catch (NumberFormatException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.notANumber());
+                } catch (NullPointerException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.invalidNumber());
+                } finally {
+                    System.out.println(line);
+                }
 
             } else if (input.startsWith("unmark")) {
-                int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
-                storage[taskIndex].unmark();
-                System.out.println("Orite, I've marked this task as not done yet:");
-                System.out.println(" " + storage[taskIndex]);
-                System.out.println(line);
+                try {
+                    int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+                    storage[taskIndex].unmark();
+                    System.out.println("Orite, I've marked this task as not done yet:");
+                    System.out.println(" " + storage[taskIndex]);
+                } catch (NumberFormatException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.notANumber());
+                } catch (NullPointerException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.invalidNumber());
+                } finally {
+                    System.out.println(line);
+                }
 
             } else if (input.startsWith("todo")) {
-                storage[count] = new Todo(input.substring(5).trim());
-                count++;
-                System.out.println("Received! I've added this task:");
-                System.out.println(" " + storage[count-1]);
-                System.out.println("Now you have " + count +  " tasks in the list.");
-                System.out.println(line);
+                try {
+                    storage[count] = new Todo(input.substring(5).trim());
+                    count++;
+                    System.out.println("Received! I've added this task:");
+                    System.out.println(" " + storage[count-1]);
+                    System.out.println("Now you have " + count +  " tasks in the list.");
+                } catch (StringIndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException("todo");
+                    System.out.println(n.emptyString());
+                } finally {
+                    System.out.println(line);
+                }
+
             } else if (input.startsWith("deadline")) {
-                String pure = input.substring(9); // "return book /by Sunday"
-                String[] parts = pure.split(" /by ", 2);
-                storage[count] = new Deadline(parts[0].trim(), parts[1].trim());
-                count++;
-                System.out.println("Received! I've added this task:");
-                System.out.println(" " + storage[count-1]);
-                System.out.println("Now you have " + count +  " tasks in the list.");
-                System.out.println(line);
+                try {
+                    String pure = input.substring(9); // "return book /by Sunday"
+                    String[] parts = pure.split(" /by ", 2);
+                    storage[count] = new Deadline(parts[0].trim(), parts[1].trim());
+                    count++;
+                    System.out.println("Received! I've added this task:");
+                    System.out.println(" " + storage[count-1]);
+                    System.out.println("Now you have " + count +  " tasks in the list.");
+                } catch (StringIndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException("deadline");
+                    System.out.println(n.emptyString());
+                } finally {
+                    System.out.println(line);
+                }
+
             } else if (input.startsWith("event")) {
-                String pure = input.substring(6); // "project meeting /from Mon 2pm /to 4pm"
-                String[] parts = pure.split(" /from | /to ");
-                storage[count] = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
-                count++;
-                System.out.println("Received! I've added this task:");
-                System.out.println(" " + storage[count-1]);
-                System.out.println("Now you have " + count +  " tasks in the list.");
+                try {
+                    String pure = input.substring(6); // "project meeting /from Mon 2pm /to 4pm"
+                    String[] parts = pure.split(" /from | /to ");
+                    storage[count] = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+                    count++;
+                    System.out.println("Received! I've added this task:");
+                    System.out.println(" " + storage[count - 1]);
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                } catch (StringIndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException("event");
+                    System.out.println(n.emptyString());
+                } finally {
+                    System.out.println(line);
+                }
+            } else {
+                RamlyException n = new RamlyException("nill");
+                System.out.println(n.randomWord());
                 System.out.println(line);
             }
         }
