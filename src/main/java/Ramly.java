@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Ramly {
     public static void main(String[] args) {
         String line = "____________________________________________________________";
@@ -14,7 +15,8 @@ public class Ramly {
         System.out.println("What do you have in mind today?");
         System.out.println(line);
 
-        Task[] storage = new Task[100];
+
+        ArrayList<Task> storage = new ArrayList<>();
         int count = 0;
 
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +33,7 @@ public class Ramly {
                 if (count != 0) {
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < count; i++) {
-                        System.out.println(i + 1 + "." + storage[i]);
+                        System.out.println(i + 1 + "." + storage.get(i));
                     }
                 } else {
                     System.out.println("You have no tasks in the list! Add some tasks to view them!");
@@ -40,13 +42,13 @@ public class Ramly {
             } else if (input.startsWith("mark")) {
                 try {
                     int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
-                    storage[taskIndex].mark();
+                    storage.get(taskIndex).mark();
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(" " + storage[taskIndex]);
+                    System.out.println(" " + storage.get(taskIndex));
                 } catch (NumberFormatException e) {
                     RamlyException n = new RamlyException();
                     System.out.println(n.notANumber());
-                } catch (NullPointerException e) {
+                } catch (IndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException();
                     System.out.println(n.invalidNumber());
                 } finally {
@@ -56,13 +58,13 @@ public class Ramly {
             } else if (input.startsWith("unmark")) {
                 try {
                     int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
-                    storage[taskIndex].unmark();
+                    storage.get(taskIndex).unmark();
                     System.out.println("Orite, I've marked this task as not done yet:");
-                    System.out.println(" " + storage[taskIndex]);
+                    System.out.println(" " + storage.get(taskIndex));
                 } catch (NumberFormatException e) {
                     RamlyException n = new RamlyException();
                     System.out.println(n.notANumber());
-                } catch (NullPointerException e) {
+                } catch (IndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException();
                     System.out.println(n.invalidNumber());
                 } finally {
@@ -71,10 +73,11 @@ public class Ramly {
 
             } else if (input.startsWith("todo")) {
                 try {
-                    storage[count] = new Todo(input.substring(5).trim());
+                    Task t = new Todo(input.substring(5).trim());
+                    storage.add(t);
                     count++;
                     System.out.println("Received! I've added this task:");
-                    System.out.println(" " + storage[count-1]);
+                    System.out.println(" " + t);
                     System.out.println("Now you have " + count +  " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("todo");
@@ -87,14 +90,18 @@ public class Ramly {
                 try {
                     String pure = input.substring(9); // "return book /by Sunday"
                     String[] parts = pure.split(" /by ", 2);
-                    storage[count] = new Deadline(parts[0].trim(), parts[1].trim());
+                    Task t = new Deadline(parts[0].trim(), parts[1].trim());
+                    storage.add(t);
                     count++;
                     System.out.println("Received! I've added this task:");
-                    System.out.println(" " + storage[count-1]);
+                    System.out.println(" " + t);
                     System.out.println("Now you have " + count +  " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("deadline");
                     System.out.println(n.emptyString());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException("deadline");
+                    System.out.println(n.correctFormat());
                 } finally {
                     System.out.println(line);
                 }
@@ -103,19 +110,42 @@ public class Ramly {
                 try {
                     String pure = input.substring(6); // "project meeting /from Mon 2pm /to 4pm"
                     String[] parts = pure.split(" /from | /to ");
-                    storage[count] = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+                    Task t = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+                    storage.add(t);
                     count++;
                     System.out.println("Received! I've added this task:");
-                    System.out.println(" " + storage[count - 1]);
+                    System.out.println(" " + t);
                     System.out.println("Now you have " + count + " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("event");
                     System.out.println(n.emptyString());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException("deadline");
+                    System.out.println(n.correctFormat());
                 } finally {
                     System.out.println(line);
                 }
+            } else if (input.startsWith("delete")) {
+                try {
+                    int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+                    Task t = storage.get(taskIndex);
+                    storage.remove(taskIndex);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(" " + t);
+                    count--;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                } catch (NumberFormatException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.notANumber());
+                } catch (IndexOutOfBoundsException e) {
+                    RamlyException n = new RamlyException();
+                    System.out.println(n.invalidNumber());
+                } finally {
+                    System.out.println(line);
+                }
+
             } else {
-                RamlyException n = new RamlyException("nill");
+                RamlyException n = new RamlyException();
                 System.out.println(n.randomWord());
                 System.out.println(line);
             }
