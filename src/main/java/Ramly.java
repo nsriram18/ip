@@ -5,17 +5,7 @@ public class Ramly {
     public static void main(String[] args) {
         Ui ui = new Ui();
         String line = "____________________________________________________________";
-        String banner = " ____                 _       \n"
-                + "|  _ \\ __ _ _ __ ___ | |_   _ \n"
-                + "| |_) / _` | '_ ` _ \\| | | | |\n"
-                + "|  _ < (_| | | | | | | | |_| |\n"
-                + "|_| \\_\\__,_|_| |_| |_|_|\\__, |\n"
-                + "                        |___/ \n";
-        System.out.println(line);
-        System.out.print(banner);
-        System.out.println("Hello! I'm Ramly.");
-        System.out.println("What do you have in mind today?");
-        System.out.println(line);
+        ui.showWelcome();
 
         Storage storage = new Storage(FILE_PATH);
         ArrayList<Task> tasks = storage.load();
@@ -26,8 +16,8 @@ public class Ramly {
             System.out.println(line);
 
             if (input.equals("bye")) {
-                System.out.println("I will take my leave now. Pleasure assisting you!");
-                System.out.println(line);
+                ui.show("I will take my leave now. Pleasure assisting you!");
+                ui.showLine();
                 break;
             } else if (input.equals("list")) {
                 if (count != 0) {

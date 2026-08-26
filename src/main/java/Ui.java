@@ -5,16 +5,25 @@ public class Ui {
     private static final String LINE = "____________________________________________________________";
     private final Scanner scanner = new Scanner(System.in);
 
-    /** Displays the application's initial greeting. */
-    public void showWelcome() {
-        System.out.println(LINE);
-        System.out.println("Hello! I'm Ramly.");
-        System.out.println("What do you have in mind today?");
-        showLine();
-    }
-
     /** Reads one command from the user. */
     public String readCommand() { return scanner.nextLine(); }
+
+    /** Displays a message to the user. */
+    public void show(String message) { System.out.println(message); }
+
+    /** Displays the initial banner and greeting. */
+    public void showWelcome() {
+        showLine();
+        show(" ____                 _       \n"
+                + "|  _ \\ __ _ _ __ ___ | |_   _ \n"
+                + "| |_) / _` | '_ ` _ \\| | | | |\n"
+                + "|  _ < (_| | | | | | | |_| |\n"
+                + "|_| \\_\\__,_|_| |_| |_|_|\\__, |\n"
+                + "                        |___/ \n");
+        show("Hello! I'm Ramly.");
+        show("What do you have in mind today?");
+        showLine();
+    }
 
     public void showLine() { System.out.println(LINE); }
 
