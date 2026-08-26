@@ -4,7 +4,6 @@ public class Ramly {
     private static final String FILE_PATH = "./data/ramly.txt";
     public static void main(String[] args) {
         Ui ui = new Ui();
-        String line = "____________________________________________________________";
         ui.showWelcome();
 
         Storage storage = new Storage(FILE_PATH);
@@ -13,7 +12,7 @@ public class Ramly {
 
         while (true) {
             String input = ui.readCommand();
-            System.out.println(line);
+            ui.showLine();
 
             if (input.equals("bye")) {
                 ui.show("I will take my leave now. Pleasure assisting you!");
@@ -28,7 +27,7 @@ public class Ramly {
                 } else {
                     System.out.println("You have no tasks in the list! Add some tasks to view them!");
                 }
-                System.out.println(line);
+                ui.showLine();
             } else if (input.startsWith("mark")) {
                 try {
                     int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
@@ -43,7 +42,7 @@ public class Ramly {
                     RamlyException n = new RamlyException();
                     System.out.println(n.invalidNumber());
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
 
             } else if (input.startsWith("unmark")) {
@@ -60,7 +59,7 @@ public class Ramly {
                     RamlyException n = new RamlyException();
                     System.out.println(n.invalidNumber());
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
 
             } else if (input.startsWith("todo")) {
@@ -76,7 +75,7 @@ public class Ramly {
                     RamlyException n = new RamlyException("todo");
                     System.out.println(n.emptyString());
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
 
             } else if (input.startsWith("deadline")) {
@@ -99,7 +98,7 @@ public class Ramly {
                 } catch (DateTimeParseException e) {
                     System.out.println("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
 
             } else if (input.startsWith("event")) {
@@ -120,7 +119,7 @@ public class Ramly {
                     RamlyException n = new RamlyException("event");
                     System.out.println(n.correctFormat());
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
             } else if (input.startsWith("delete")) {
                 try {
@@ -139,13 +138,13 @@ public class Ramly {
                     RamlyException n = new RamlyException();
                     System.out.println(n.invalidNumber());
                 } finally {
-                    System.out.println(line);
+                    ui.showLine();
                 }
 
             } else {
                 RamlyException n = new RamlyException();
                 System.out.println(n.randomWord());
-                System.out.println(line);
+                ui.showLine();
             }
 
         }
