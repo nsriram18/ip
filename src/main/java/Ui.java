@@ -11,6 +11,9 @@ public class Ui {
     /** Displays a message to the user. */
     public void show(String message) { System.out.println(message); }
 
+    /** Displays an error message to the user. */
+    public void showError(String message) { show(message); }
+
     /** Displays the initial banner and greeting. */
     public void showWelcome() {
         showLine();
