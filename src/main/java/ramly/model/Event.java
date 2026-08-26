@@ -1,3 +1,7 @@
+package ramly.model;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 public class Event extends Task {
 
     protected String from;
@@ -20,4 +24,3 @@ public class Event extends Task {
         return super.toString() + " (from: " + this.from + " to: " + this.to + ")";
     }
 }
-

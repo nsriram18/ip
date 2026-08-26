@@ -1,3 +1,7 @@
+package ramly.command;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 /** Shared workflow for commands that create and save tasks. */
 public abstract class AddTaskCommand extends Command {
     protected abstract Task createTask();

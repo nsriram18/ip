@@ -1,3 +1,7 @@
+package ramly;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 public class Ramly {
     private final Storage storage;
     private final TaskList tasks;

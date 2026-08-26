@@ -1,3 +1,7 @@
+package ramly.parser;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 /** Converts raw user command text into the parts needed by the application. */
 public class Parser {
     /** Returns the command object for an exact exit command, or null otherwise. */

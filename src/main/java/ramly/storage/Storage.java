@@ -1,3 +1,7 @@
+package ramly.storage;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

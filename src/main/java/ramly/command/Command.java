@@ -1,3 +1,7 @@
+package ramly.command;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 /** Represents an executable user command. */
 public abstract class Command {
     /** Executes this command using the application's collaborators. */

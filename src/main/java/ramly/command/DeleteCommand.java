@@ -1,3 +1,7 @@
+package ramly.command;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 /** Command that removes a task by its one-based user-facing number. */
 public class DeleteCommand extends Command {
     private final int taskIndex;

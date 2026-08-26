@@ -1,3 +1,7 @@
+package ramly.model;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 import java.util.ArrayList;
 
 /** Owns the collection of tasks and its basic operations. */

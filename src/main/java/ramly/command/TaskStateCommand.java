@@ -1,3 +1,7 @@
+package ramly.command;
+
+import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+
 /** Shared workflow for commands that change a task's completion state. */
 public abstract class TaskStateCommand extends Command {
     private final int taskIndex;
