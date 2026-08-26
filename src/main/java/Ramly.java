@@ -1,9 +1,9 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
 public class Ramly {
     private static final String FILE_PATH = "./data/ramly.txt";
     public static void main(String[] args) {
+        Ui ui = new Ui();
         String line = "____________________________________________________________";
         String banner = " ____                 _       \n"
                 + "|  _ \\ __ _ _ __ ___ | |_   _ \n"
@@ -21,10 +21,8 @@ public class Ramly {
         ArrayList<Task> tasks = storage.load();
         int count = tasks.size();
 
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
-            String input = scanner.nextLine();
+            String input = ui.readCommand();
             System.out.println(line);
 
             if (input.equals("bye")) {
@@ -161,7 +159,7 @@ public class Ramly {
             }
 
         }
-        scanner.close();
+        ui.close();
     }
 
 }
