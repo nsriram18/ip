@@ -113,26 +113,6 @@ public class Ramly {
                 } finally {
                     ui.showLine();
                 }
-            } else if (parser.isCommand(input, "delete")) {
-                try {
-                    int taskIndex = parser.parseTaskIndex(input, 7);
-                    Task t = tasks.get(taskIndex);
-                    tasks.remove(taskIndex);
-                    storage.save(tasks);
-                    ui.show("Noted. I've removed this task:");
-                    ui.show(" " + t);
-                    count--;
-                    ui.show("Now you have " + count + " tasks in the list.");
-                } catch (NumberFormatException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.notANumber());
-                } catch (IndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.invalidNumber());
-                } finally {
-                    ui.showLine();
-                }
-
             } else {
                 RamlyException n = new RamlyException();
                 ui.show(n.randomWord());
