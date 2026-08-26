@@ -3,38 +3,40 @@ public class Parser {
     /** Returns the command object for an exact exit command, or null otherwise. */
     public Command parse(String input) {
         try {
-            if (input.equals("bye")) {
-            return new ExitCommand();
-        }
-        if (input.equals("list")) {
-            return new ListCommand();
-        }
-        if (isCommand(input, "mark")) {
-            return new MarkCommand(input);
-        }
-        if (isCommand(input, "unmark")) {
-            return new UnmarkCommand(input);
-        }
-        if (isCommand(input, "todo")) {
-            return new TodoCommand(parseTodo(input));
-        }
-        if (isCommand(input, "deadline")) {
-            String[] parts = parseDeadline(input);
-            return new DeadlineCommand(parts[0].trim(), parts[1].trim());
-        }
-        if (isCommand(input, "event")) {
-            String[] parts = parseEvent(input);
-            return new EventCommand(parts[0].trim(), parts[1].trim(), parts[2].trim());
-        }
-        if (isCommand(input, "delete")) {
-            return new DeleteCommand(input);
-        }
-            return new UnknownCommand();
+            switch (getCommandType(input)) {
+            case BYE: return new ExitCommand();
+            case LIST: return new ListCommand();
+            case MARK: return new MarkCommand(input);
+            case UNMARK: return new UnmarkCommand(input);
+            case TODO: return new TodoCommand(parseTodo(input));
+            case DEADLINE:
+                String[] deadline = parseDeadline(input);
+                return new DeadlineCommand(deadline[0].trim(), deadline[1].trim());
+            case EVENT:
+                String[] event = parseEvent(input);
+                return new EventCommand(event[0].trim(), event[1].trim(), event[2].trim());
+            case DELETE: return new DeleteCommand(input);
+            default: return new UnknownCommand();
+            }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             return new ErrorCommand("Please use the correct command format.");
         } catch (java.time.format.DateTimeParseException e) {
             return new ErrorCommand("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
         }
+    }
+
+    /** Classifies a raw input before its command-specific fields are parsed. */
+    public CommandType getCommandType(String input) {
+        if (input.equals("bye")) return CommandType.BYE;
+        if (input.equals("list")) return CommandType.LIST;
+        for (CommandType type : CommandType.values()) {
+            String word = type.name().toLowerCase();
+            if (!type.equals(CommandType.BYE) && !type.equals(CommandType.LIST)
+                    && !type.equals(CommandType.UNKNOWN) && isCommand(input, word)) {
+                return type;
+            }
+        }
+        return CommandType.UNKNOWN;
     }
 
     /** Splits a deadline command into its description and deadline value. */
