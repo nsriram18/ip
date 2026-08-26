@@ -22,40 +22,6 @@ public class Ramly {
                     break;
                 }
                 ui.showLine();
-            } else if (parser.isCommand(input, "mark")) {
-                try {
-                    int taskIndex = parser.parseTaskIndex(input, 5);
-                    tasks.get(taskIndex).mark();
-                    storage.save(tasks);
-                    ui.show("Nice! I've marked this task as done:");
-                    ui.show(" " + tasks.get(taskIndex));
-                } catch (NumberFormatException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.notANumber());
-                } catch (IndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.invalidNumber());
-                } finally {
-                    ui.showLine();
-                }
-
-            } else if (parser.isCommand(input, "unmark")) {
-                try {
-                    int taskIndex = parser.parseTaskIndex(input, 7);
-                    tasks.get(taskIndex).unmark();
-                    storage.save(tasks);
-                    ui.show("Orite, I've marked this task as not done yet:");
-                    ui.show(" " + tasks.get(taskIndex));
-                } catch (NumberFormatException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.notANumber());
-                } catch (IndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException();
-                    ui.show(n.invalidNumber());
-                } finally {
-                    ui.showLine();
-                }
-
             } else if (parser.isCommand(input, "todo")) {
                 try {
                     Task t = new Todo(parser.parseTodo(input));

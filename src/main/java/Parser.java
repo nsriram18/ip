@@ -8,6 +8,12 @@ public class Parser {
         if (input.equals("list")) {
             return new ListCommand();
         }
+        if (isCommand(input, "mark")) {
+            return new MarkCommand(input);
+        }
+        if (isCommand(input, "unmark")) {
+            return new UnmarkCommand(input);
+        }
         if (isCommand(input, "delete")) {
             return new DeleteCommand(input);
         }
