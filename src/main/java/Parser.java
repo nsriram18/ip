@@ -1,5 +1,10 @@
 /** Converts raw user command text into the parts needed by the application. */
 public class Parser {
+    /** Returns the command object for an exact exit command, or null otherwise. */
+    public Command parse(String input) {
+        return input.equals("bye") ? new ExitCommand() : null;
+    }
+
     /** Splits a deadline command into its description and deadline value. */
     public String[] parseDeadline(String command) {
         String pure = command.substring(9);

@@ -15,9 +15,9 @@ public class Ramly {
             String input = ui.readCommand();
             ui.showLine();
 
-            if (input.equals("bye")) {
-                ui.show("I will take my leave now. Pleasure assisting you!");
-                ui.showLine();
+            Command command = parser.parse(input);
+            if (command != null) {
+                command.execute(tasks, ui, storage);
                 break;
             } else if (input.equals("list")) {
                 if (count != 0) {
