@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 public class Ramly {
     private static final String FILE_PATH = "./data/ramly.txt";
     public static void main(String[] args) {
@@ -18,7 +19,6 @@ public class Ramly {
 
         Storage storage = new Storage(FILE_PATH);
         ArrayList<Task> tasks = storage.load();
-        //ArrayList<Task> storage = new ArrayList<>();
         int count = tasks.size();
 
         Scanner scanner = new Scanner(System.in);
@@ -108,6 +108,8 @@ public class Ramly {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("deadline");
                     System.out.println(n.correctFormat());
+                } catch (DateTimeParseException e) {
+                    System.out.println("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
                 } finally {
                     System.out.println(line);
                 }
