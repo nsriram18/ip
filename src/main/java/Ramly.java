@@ -20,12 +20,12 @@ public class Ramly {
                 break;
             } else if (input.equals("list")) {
                 if (count != 0) {
-                    System.out.println("Here are the tasks in your list:");
+                    ui.show("Here are the tasks in your list:");
                     for (int i = 0; i < count; i++) {
-                        System.out.println(i + 1 + "." + tasks.get(i));
+                        ui.show(i + 1 + "." + tasks.get(i));
                     }
                 } else {
-                    System.out.println("You have no tasks in the list! Add some tasks to view them!");
+                    ui.show("You have no tasks in the list! Add some tasks to view them!");
                 }
                 ui.showLine();
             } else if (input.startsWith("mark")) {
