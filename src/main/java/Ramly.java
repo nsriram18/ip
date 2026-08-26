@@ -19,10 +19,6 @@ public class Ramly {
                     break;
                 }
                 ui.showLine();
-            } else {
-                RamlyException n = new RamlyException();
-                ui.show(n.randomWord());
-                ui.showLine();
             }
 
         }

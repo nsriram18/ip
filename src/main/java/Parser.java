@@ -28,7 +28,7 @@ public class Parser {
         if (isCommand(input, "delete")) {
             return new DeleteCommand(input);
         }
-        return null;
+        return new UnknownCommand();
     }
 
     /** Splits a deadline command into its description and deadline value. */
