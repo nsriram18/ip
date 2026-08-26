@@ -16,4 +16,9 @@ public class Parser {
         String pure = command.substring(6);
         return pure.split(" /from | /to ");
     }
+
+    /** Converts a one-based task number from a command into a zero-based index. */
+    public int parseTaskIndex(String command, int prefixLength) {
+        return Integer.parseInt(command.substring(prefixLength).trim()) - 1;
+    }
 }

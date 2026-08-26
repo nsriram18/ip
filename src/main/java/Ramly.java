@@ -31,7 +31,7 @@ public class Ramly {
                 ui.showLine();
             } else if (input.startsWith("mark")) {
                 try {
-                    int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
+                    int taskIndex = parser.parseTaskIndex(input, 5);
                     tasks.get(taskIndex).mark();
                     storage.save(tasks);
                     ui.show("Nice! I've marked this task as done:");
@@ -48,7 +48,7 @@ public class Ramly {
 
             } else if (input.startsWith("unmark")) {
                 try {
-                    int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+                    int taskIndex = parser.parseTaskIndex(input, 7);
                     tasks.get(taskIndex).unmark();
                     storage.save(tasks);
                     ui.show("Orite, I've marked this task as not done yet:");
@@ -122,7 +122,7 @@ public class Ramly {
                 }
             } else if (input.startsWith("delete")) {
                 try {
-                    int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
+                    int taskIndex = parser.parseTaskIndex(input, 7);
                     Task t = tasks.get(taskIndex);
                     tasks.remove(taskIndex);
                     storage.save(tasks);
