@@ -2,7 +2,13 @@
 public class Parser {
     /** Returns the command object for an exact exit command, or null otherwise. */
     public Command parse(String input) {
-        return input.equals("bye") ? new ExitCommand() : null;
+        if (input.equals("bye")) {
+            return new ExitCommand();
+        }
+        if (input.equals("list")) {
+            return new ListCommand();
+        }
+        return null;
     }
 
     /** Splits a deadline command into its description and deadline value. */

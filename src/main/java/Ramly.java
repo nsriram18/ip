@@ -18,15 +18,8 @@ public class Ramly {
             Command command = parser.parse(input);
             if (command != null) {
                 command.execute(tasks, ui, storage);
-                break;
-            } else if (input.equals("list")) {
-                if (count != 0) {
-                    ui.show("Here are the tasks in your list:");
-                    for (int i = 0; i < count; i++) {
-                        ui.show(i + 1 + "." + tasks.get(i));
-                    }
-                } else {
-                    ui.show("You have no tasks in the list! Add some tasks to view them!");
+                if (command.isExit()) {
+                    break;
                 }
                 ui.showLine();
             } else if (parser.isCommand(input, "mark")) {
