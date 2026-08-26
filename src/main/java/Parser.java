@@ -14,6 +14,17 @@ public class Parser {
         if (isCommand(input, "unmark")) {
             return new UnmarkCommand(input);
         }
+        if (isCommand(input, "todo")) {
+            return new TodoCommand(parseTodo(input));
+        }
+        if (isCommand(input, "deadline")) {
+            String[] parts = parseDeadline(input);
+            return new DeadlineCommand(parts[0].trim(), parts[1].trim());
+        }
+        if (isCommand(input, "event")) {
+            String[] parts = parseEvent(input);
+            return new EventCommand(parts[0].trim(), parts[1].trim(), parts[2].trim());
+        }
         if (isCommand(input, "delete")) {
             return new DeleteCommand(input);
         }

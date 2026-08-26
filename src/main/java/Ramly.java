@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.time.format.DateTimeParseException;
 public class Ramly {
     private static final String FILE_PATH = "./data/ramly.txt";
     public static void main(String[] args) {
@@ -9,7 +7,6 @@ public class Ramly {
 
         Storage storage = new Storage(FILE_PATH);
         TaskList tasks = new TaskList(storage.load());
-        int count = tasks.size();
 
         while (true) {
             String input = ui.readCommand();
@@ -22,63 +19,6 @@ public class Ramly {
                     break;
                 }
                 ui.showLine();
-            } else if (parser.isCommand(input, "todo")) {
-                try {
-                    Task t = new Todo(parser.parseTodo(input));
-                    tasks.add(t);
-                    storage.save(tasks);
-                    count++;
-                    ui.show("Received! I've added this task:");
-                    ui.show(" " + t);
-                    ui.show("Now you have " + count +  " tasks in the list.");
-                } catch (StringIndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException("todo");
-                    ui.show(n.emptyString());
-                } finally {
-                    ui.showLine();
-                }
-
-            } else if (parser.isCommand(input, "deadline")) {
-                try {
-                    String[] parts = parser.parseDeadline(input);
-                    Task t = new Deadline(parts[0].trim(), parts[1].trim());
-                    tasks.add(t);
-                    storage.save(tasks);
-                    count++;
-                    ui.show("Received! I've added this task:");
-                    ui.show(" " + t);
-                    ui.show("Now you have " + count +  " tasks in the list.");
-                } catch (StringIndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException("deadline");
-                    ui.show(n.emptyString());
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException("deadline");
-                    ui.show(n.correctFormat());
-                } catch (DateTimeParseException e) {
-                    ui.show("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
-                } finally {
-                    ui.showLine();
-                }
-
-            } else if (parser.isCommand(input, "event")) {
-                try {
-                    String[] parts = parser.parseEvent(input);
-                    Task t = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
-                    tasks.add(t);
-                    storage.save(tasks);
-                    count++;
-                    ui.show("Received! I've added this task:");
-                    ui.show(" " + t);
-                    ui.show("Now you have " + count + " tasks in the list.");
-                } catch (StringIndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException("event");
-                    ui.show(n.emptyString());
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    RamlyException n = new RamlyException("event");
-                    ui.show(n.correctFormat());
-                } finally {
-                    ui.showLine();
-                }
             } else {
                 RamlyException n = new RamlyException();
                 ui.show(n.randomWord());
