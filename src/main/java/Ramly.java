@@ -8,7 +8,7 @@ public class Ramly {
         ui.showWelcome();
 
         Storage storage = new Storage(FILE_PATH);
-        ArrayList<Task> tasks = storage.load();
+        TaskList tasks = new TaskList(storage.load());
         int count = tasks.size();
 
         while (true) {
@@ -33,7 +33,7 @@ public class Ramly {
                 try {
                     int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
                     tasks.get(taskIndex).mark();
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     ui.show("Nice! I've marked this task as done:");
                     ui.show(" " + tasks.get(taskIndex));
                 } catch (NumberFormatException e) {
@@ -50,7 +50,7 @@ public class Ramly {
                 try {
                     int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
                     tasks.get(taskIndex).unmark();
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     ui.show("Orite, I've marked this task as not done yet:");
                     ui.show(" " + tasks.get(taskIndex));
                 } catch (NumberFormatException e) {
@@ -67,7 +67,7 @@ public class Ramly {
                 try {
                     Task t = new Todo(parser.parseTodo(input));
                     tasks.add(t);
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     count++;
                     ui.show("Received! I've added this task:");
                     ui.show(" " + t);
@@ -84,7 +84,7 @@ public class Ramly {
                     String[] parts = parser.parseDeadline(input);
                     Task t = new Deadline(parts[0].trim(), parts[1].trim());
                     tasks.add(t);
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     count++;
                     ui.show("Received! I've added this task:");
                     ui.show(" " + t);
@@ -106,7 +106,7 @@ public class Ramly {
                     String[] parts = parser.parseEvent(input);
                     Task t = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
                     tasks.add(t);
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     count++;
                     ui.show("Received! I've added this task:");
                     ui.show(" " + t);
@@ -125,7 +125,7 @@ public class Ramly {
                     int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
                     Task t = tasks.get(taskIndex);
                     tasks.remove(taskIndex);
-                    storage.save(tasks);
+                    storage.save(tasks.asArrayList());
                     ui.show("Noted. I've removed this task:");
                     ui.show(" " + t);
                     count--;
