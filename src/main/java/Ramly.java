@@ -68,12 +68,12 @@ public class Ramly {
                     tasks.add(t);
                     storage.save(tasks);
                     count++;
-                    System.out.println("Received! I've added this task:");
-                    System.out.println(" " + t);
-                    System.out.println("Now you have " + count +  " tasks in the list.");
+                    ui.show("Received! I've added this task:");
+                    ui.show(" " + t);
+                    ui.show("Now you have " + count +  " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("todo");
-                    System.out.println(n.emptyString());
+                    ui.show(n.emptyString());
                 } finally {
                     ui.showLine();
                 }
@@ -86,17 +86,17 @@ public class Ramly {
                     tasks.add(t);
                     storage.save(tasks);
                     count++;
-                    System.out.println("Received! I've added this task:");
-                    System.out.println(" " + t);
-                    System.out.println("Now you have " + count +  " tasks in the list.");
+                    ui.show("Received! I've added this task:");
+                    ui.show(" " + t);
+                    ui.show("Now you have " + count +  " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("deadline");
-                    System.out.println(n.emptyString());
+                    ui.show(n.emptyString());
                 } catch (ArrayIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("deadline");
-                    System.out.println(n.correctFormat());
+                    ui.show(n.correctFormat());
                 } catch (DateTimeParseException e) {
-                    System.out.println("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
+                    ui.show("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
                 } finally {
                     ui.showLine();
                 }
@@ -109,15 +109,15 @@ public class Ramly {
                     tasks.add(t);
                     storage.save(tasks);
                     count++;
-                    System.out.println("Received! I've added this task:");
-                    System.out.println(" " + t);
-                    System.out.println("Now you have " + count + " tasks in the list.");
+                    ui.show("Received! I've added this task:");
+                    ui.show(" " + t);
+                    ui.show("Now you have " + count + " tasks in the list.");
                 } catch (StringIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("event");
-                    System.out.println(n.emptyString());
+                    ui.show(n.emptyString());
                 } catch (ArrayIndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException("event");
-                    System.out.println(n.correctFormat());
+                    ui.show(n.correctFormat());
                 } finally {
                     ui.showLine();
                 }
