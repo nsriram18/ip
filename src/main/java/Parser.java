@@ -21,4 +21,9 @@ public class Parser {
     public int parseTaskIndex(String command, int prefixLength) {
         return Integer.parseInt(command.substring(prefixLength).trim()) - 1;
     }
+
+    /** Checks whether a raw command begins with the specified command word. */
+    public boolean isCommand(String input, String command) {
+        return input.equals(command) || input.startsWith(command + " ");
+    }
 }

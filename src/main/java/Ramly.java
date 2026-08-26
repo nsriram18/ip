@@ -29,7 +29,7 @@ public class Ramly {
                     ui.show("You have no tasks in the list! Add some tasks to view them!");
                 }
                 ui.showLine();
-            } else if (input.startsWith("mark")) {
+            } else if (parser.isCommand(input, "mark")) {
                 try {
                     int taskIndex = parser.parseTaskIndex(input, 5);
                     tasks.get(taskIndex).mark();
@@ -46,7 +46,7 @@ public class Ramly {
                     ui.showLine();
                 }
 
-            } else if (input.startsWith("unmark")) {
+            } else if (parser.isCommand(input, "unmark")) {
                 try {
                     int taskIndex = parser.parseTaskIndex(input, 7);
                     tasks.get(taskIndex).unmark();
@@ -63,7 +63,7 @@ public class Ramly {
                     ui.showLine();
                 }
 
-            } else if (input.startsWith("todo")) {
+            } else if (parser.isCommand(input, "todo")) {
                 try {
                     Task t = new Todo(parser.parseTodo(input));
                     tasks.add(t);
@@ -79,7 +79,7 @@ public class Ramly {
                     ui.showLine();
                 }
 
-            } else if (input.startsWith("deadline")) {
+            } else if (parser.isCommand(input, "deadline")) {
                 try {
                     String[] parts = parser.parseDeadline(input);
                     Task t = new Deadline(parts[0].trim(), parts[1].trim());
@@ -101,7 +101,7 @@ public class Ramly {
                     ui.showLine();
                 }
 
-            } else if (input.startsWith("event")) {
+            } else if (parser.isCommand(input, "event")) {
                 try {
                     String[] parts = parser.parseEvent(input);
                     Task t = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
@@ -120,7 +120,7 @@ public class Ramly {
                 } finally {
                     ui.showLine();
                 }
-            } else if (input.startsWith("delete")) {
+            } else if (parser.isCommand(input, "delete")) {
                 try {
                     int taskIndex = parser.parseTaskIndex(input, 7);
                     Task t = tasks.get(taskIndex);
