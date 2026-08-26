@@ -33,14 +33,14 @@ public class Ramly {
                     int taskIndex = Integer.parseInt(input.substring(5).trim()) - 1;
                     tasks.get(taskIndex).mark();
                     storage.save(tasks);
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(" " + tasks.get(taskIndex));
+                    ui.show("Nice! I've marked this task as done:");
+                    ui.show(" " + tasks.get(taskIndex));
                 } catch (NumberFormatException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.notANumber());
+                    ui.show(n.notANumber());
                 } catch (IndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.invalidNumber());
+                    ui.show(n.invalidNumber());
                 } finally {
                     ui.showLine();
                 }
@@ -50,14 +50,14 @@ public class Ramly {
                     int taskIndex = Integer.parseInt(input.substring(7).trim()) - 1;
                     tasks.get(taskIndex).unmark();
                     storage.save(tasks);
-                    System.out.println("Orite, I've marked this task as not done yet:");
-                    System.out.println(" " + tasks.get(taskIndex));
+                    ui.show("Orite, I've marked this task as not done yet:");
+                    ui.show(" " + tasks.get(taskIndex));
                 } catch (NumberFormatException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.notANumber());
+                    ui.show(n.notANumber());
                 } catch (IndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.invalidNumber());
+                    ui.show(n.invalidNumber());
                 } finally {
                     ui.showLine();
                 }
