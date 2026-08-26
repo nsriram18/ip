@@ -4,6 +4,7 @@ public class Ramly {
     private static final String FILE_PATH = "./data/ramly.txt";
     public static void main(String[] args) {
         Ui ui = new Ui();
+        Parser parser = new Parser();
         ui.showWelcome();
 
         Storage storage = new Storage(FILE_PATH);
@@ -80,8 +81,7 @@ public class Ramly {
 
             } else if (input.startsWith("deadline")) {
                 try {
-                    String pure = input.substring(9); // "return book /by Sunday"
-                    String[] parts = pure.split(" /by ", 2);
+                    String[] parts = parser.parseDeadline(input);
                     Task t = new Deadline(parts[0].trim(), parts[1].trim());
                     tasks.add(t);
                     storage.save(tasks);
