@@ -127,23 +127,23 @@ public class Ramly {
                     Task t = tasks.get(taskIndex);
                     tasks.remove(taskIndex);
                     storage.save(tasks);
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println(" " + t);
+                    ui.show("Noted. I've removed this task:");
+                    ui.show(" " + t);
                     count--;
-                    System.out.println("Now you have " + count + " tasks in the list.");
+                    ui.show("Now you have " + count + " tasks in the list.");
                 } catch (NumberFormatException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.notANumber());
+                    ui.show(n.notANumber());
                 } catch (IndexOutOfBoundsException e) {
                     RamlyException n = new RamlyException();
-                    System.out.println(n.invalidNumber());
+                    ui.show(n.invalidNumber());
                 } finally {
                     ui.showLine();
                 }
 
             } else {
                 RamlyException n = new RamlyException();
-                System.out.println(n.randomWord());
+                ui.show(n.randomWord());
                 ui.showLine();
             }
 
