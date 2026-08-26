@@ -26,7 +26,7 @@ public class RamlyException extends Exception{
     public String correctFormat() {
         if (this.s == "deadline") {
             return "Please use the correct format to log a deadline.\n" +
-                    "deadline <description> /by <Day/Date/Time>";
+                    "deadline <description> /by <yyyy-mm-dd>";
         } else if (this.s == "event") {
             return "Please use the correct format to log a event.\n" +
                     "deadline <description> /from <Day/Date/Time> /to <Day/Date/Time>";
