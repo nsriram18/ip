@@ -70,7 +70,7 @@ public class Storage {
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(TaskList tasks) {
         File file = new File(filePath);
         ensureFileExists(file);
 

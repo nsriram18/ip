@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /** Owns the collection of tasks and its basic operations. */
-public class TaskList {
+public class TaskList implements Iterable<Task> {
     private final ArrayList<Task> tasks;
 
     public TaskList(ArrayList<Task> tasks) {
@@ -16,5 +16,6 @@ public class TaskList {
 
     public Task remove(int index) { return tasks.remove(index); }
 
-    public ArrayList<Task> asArrayList() { return tasks; }
+    @Override
+    public java.util.Iterator<Task> iterator() { return tasks.iterator(); }
 }
