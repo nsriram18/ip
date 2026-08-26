@@ -65,7 +65,7 @@ public class Ramly {
 
             } else if (input.startsWith("todo")) {
                 try {
-                    Task t = new Todo(input.substring(5).trim());
+                    Task t = new Todo(parser.parseTodo(input));
                     tasks.add(t);
                     storage.save(tasks);
                     count++;
@@ -103,8 +103,7 @@ public class Ramly {
 
             } else if (input.startsWith("event")) {
                 try {
-                    String pure = input.substring(6); // "project meeting /from Mon 2pm /to 4pm"
-                    String[] parts = pure.split(" /from | /to ");
+                    String[] parts = parser.parseEvent(input);
                     Task t = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
                     tasks.add(t);
                     storage.save(tasks);
