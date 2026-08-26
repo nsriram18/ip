@@ -2,7 +2,8 @@
 public class Parser {
     /** Returns the command object for an exact exit command, or null otherwise. */
     public Command parse(String input) {
-        if (input.equals("bye")) {
+        try {
+            if (input.equals("bye")) {
             return new ExitCommand();
         }
         if (input.equals("list")) {
@@ -28,7 +29,12 @@ public class Parser {
         if (isCommand(input, "delete")) {
             return new DeleteCommand(input);
         }
-        return new UnknownCommand();
+            return new UnknownCommand();
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            return new ErrorCommand("Please use the correct command format.");
+        } catch (java.time.format.DateTimeParseException e) {
+            return new ErrorCommand("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
+        }
     }
 
     /** Splits a deadline command into its description and deadline value. */
