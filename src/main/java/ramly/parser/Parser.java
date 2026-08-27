@@ -20,6 +20,7 @@ public class Parser {
                 String[] event = parseEvent(input);
                 return new EventCommand(event[0].trim(), event[1].trim(), event[2].trim());
             case DELETE: return new DeleteCommand(input);
+            case FIND: return new FindCommand(parseFind(input));
             default: return new UnknownCommand();
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
@@ -51,6 +52,11 @@ public class Parser {
 
     /** Returns the description in a todo command. */
     public String parseTodo(String command) {
+        return command.substring(5).trim();
+    }
+
+    /** Returns the keyword from a find command. */
+    public String parseFind(String command) {
         return command.substring(5).trim();
     }
 
