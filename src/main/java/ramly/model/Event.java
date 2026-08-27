@@ -1,7 +1,5 @@
 package ramly.model;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 /** Represents a task occurring between a start and end time. */
 public class Event extends Task {
 

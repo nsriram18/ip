@@ -1,7 +1,5 @@
 package ramly.model;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 /** Represents a task with a description, type, and completion state. */
 public class Task {
     protected String description;
