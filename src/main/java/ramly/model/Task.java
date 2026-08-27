@@ -25,9 +25,7 @@ public class Task {
         this.isDone = true;
     }
 
-    public void unmark() {
-        this.isDone = false;
-    }
+    public void unmark() { this.isDone = false; }
 
     public String toFileString() {
         return type.getCode() + " | " + (isDone ? "1" : "0") + " | " + description;
