@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** Loads tasks from and saves tasks to a persistent file. */
 public class Storage {
     private final String filePath;
 
+    /** Creates storage backed by the specified file path. */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /** Creates the storage directory and file when they do not exist. */
     private void ensureFileExists(File file) {
         File parentDir = file.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
@@ -29,6 +32,7 @@ public class Storage {
         }
     }
 
+    /** Loads all valid tasks currently stored in the file. */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -74,6 +78,7 @@ public class Storage {
         return tasks;
     }
 
+    /** Saves the current task list to the backing file. */
     public void save(TaskList tasks) {
         File file = new File(filePath);
         ensureFileExists(file);

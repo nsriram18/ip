@@ -32,7 +32,9 @@ public class Ui {
         showLine();
     }
 
+    /** Displays a divider between interactions. */
     public void showLine() { System.out.println(LINE); }
 
+    /** Releases the console input resource. */
     public void close() { scanner.close(); }
 }

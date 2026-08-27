@@ -7,6 +7,7 @@ public class DeleteCommand extends Command {
     private final int taskIndex;
     private final boolean invalidNumber;
 
+    /** Creates a delete command from raw user input. */
     public DeleteCommand(String command) {
         int parsedIndex;
         boolean parseFailed;
@@ -22,6 +23,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
+    /** Removes the selected task and persists the updated list. */
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (invalidNumber) {
             ui.show(new RamlyException().notANumber());

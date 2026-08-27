@@ -4,9 +4,11 @@ import ramly.command.*; import ramly.model.*; import ramly.parser.*; import raml
 
 /** Shared workflow for commands that create and save tasks. */
 public abstract class AddTaskCommand extends Command {
+    /** Creates the concrete task represented by this command. */
     protected abstract Task createTask();
 
     @Override
+    /** Creates, saves, and reports the newly created task. */
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             Task task = createTask();
