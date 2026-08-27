@@ -2,6 +2,7 @@ package ramly.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
@@ -27,5 +28,16 @@ public class TaskListTest {
 
         assertSame(task, tasks.remove(0));
         assertEquals(0, tasks.size());
+    }
+
+    @Test
+    public void find_keyword_returnsCaseInsensitiveMatches() {
+        Task matchingTask = new Todo("Read a Book");
+        Task otherTask = new Todo("Write report");
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(matchingTask);
+        tasks.add(otherTask);
+
+        assertEquals(java.util.List.of(matchingTask), tasks.find("book"));
     }
 }

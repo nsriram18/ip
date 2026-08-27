@@ -4,5 +4,5 @@ import ramly.command.*; import ramly.model.*; import ramly.parser.*; import raml
 
 /** The command categories understood by Ramly. */
 public enum CommandType {
-    BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, UNKNOWN
+    BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN
 }
