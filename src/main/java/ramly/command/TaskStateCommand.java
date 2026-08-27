@@ -21,10 +21,13 @@ public abstract class TaskStateCommand extends Command {
         invalidNumber = parseFailed;
     }
 
+    /** Applies the concrete completion-state change. */
     protected abstract void update(Task task);
+    /** Returns the concrete success message. */
     protected abstract String successMessage();
 
     @Override
+    /** Validates, updates, saves, and reports the selected task. */
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
         if (invalidNumber) {
             ui.show(new RamlyException().notANumber());

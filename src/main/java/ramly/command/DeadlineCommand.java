@@ -6,6 +6,7 @@ import ramly.command.*; import ramly.model.*; import ramly.parser.*; import raml
 public class DeadlineCommand extends AddTaskCommand {
     private final String description;
     private final String deadline;
+    /** Creates a deadline command for the supplied description and deadline. */
     public DeadlineCommand(String description, String deadline) {
         this.description = description; this.deadline = deadline;
     }

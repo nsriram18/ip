@@ -5,11 +5,13 @@ import ramly.command.*; import ramly.model.*; import ramly.parser.*; import raml
 /** Command that terminates the application. */
 public class ExitCommand extends Command {
     @Override
+    /** Displays the exit message. */
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.show("I will take my leave now. Pleasure assisting you!");
         ui.showLine();
     }
 
     @Override
+    /** Indicates that the application should terminate. */
     public boolean isExit() { return true; }
 }

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
+/** Represents a task that must be completed by a date and optional time. */
 public class Deadline extends Task {
     private static final DateTimeFormatter STORAGE_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     private static final DateTimeFormatter DISPLAY_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
@@ -23,11 +24,13 @@ public class Deadline extends Task {
     private final LocalDateTime by;
 
 
+    /** Creates a deadline from a supported user or storage date format. */
     public Deadline(String description, String by) {
         super(description, TaskType.DEADLINE);
         this.by = parseDateTime(by);
     }
 
+    /** Parses storage or user input into a local date and time. */
     private static LocalDateTime parseDateTime(String value) {
         try {
             return LocalDateTime.parse(value, STORAGE_FORMAT);
@@ -40,10 +43,12 @@ public class Deadline extends Task {
         return LocalDateTime.parse(value, INPUT_FORMAT);
     }
 
+    /** Returns the parsed deadline date and time. */
     public LocalDateTime getBy() {
         return by;
     }
 
+    /** Formats the deadline for display to the user. */
     private String displayDateTime() {
         String date = by.format(DISPLAY_DATE_FORMAT);
         return by.toLocalTime().equals(LocalTime.MIDNIGHT)
@@ -52,11 +57,13 @@ public class Deadline extends Task {
     }
 
     @Override
+    /** Returns the serialized deadline representation. */
     public String toFileString() {
         return super.toFileString() + " | " + by.format(STORAGE_FORMAT);
     }
 
     @Override
+    /** Returns the user-facing deadline representation. */
     public String toString() {
         return super.toString() + " (by: " + displayDateTime() + ")";
     }
