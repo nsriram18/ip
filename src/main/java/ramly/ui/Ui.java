@@ -1,7 +1,5 @@
 package ramly.ui;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 import java.util.Scanner;
 
 /** Handles console input and output for Ramly. */
@@ -10,13 +8,19 @@ public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
     /** Reads one command from the user. */
-    public String readCommand() { return scanner.nextLine(); }
+    public String readCommand() {
+        return scanner.nextLine();
+    }
 
     /** Displays a message to the user. */
-    public void show(String message) { System.out.println(message); }
+    public void show(String message) {
+        System.out.println(message);
+    }
 
     /** Displays an error message to the user. */
-    public void showError(String message) { show(message); }
+    public void showError(String message) {
+        show(message);
+    }
 
     /** Displays the initial banner and greeting. */
     public void showWelcome() {
@@ -33,8 +37,12 @@ public class Ui {
     }
 
     /** Displays a divider between interactions. */
-    public void showLine() { System.out.println(LINE); }
+    public void showLine() {
+        System.out.println(LINE);
+    }
 
     /** Releases the console input resource. */
-    public void close() { scanner.close(); }
+    public void close() {
+        scanner.close();
+    }
 }

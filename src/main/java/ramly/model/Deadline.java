@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 
 /** Represents a task that must be completed by a date and optional time. */
 public class Deadline extends Task {
@@ -54,14 +53,14 @@ public class Deadline extends Task {
                 : date + ", " + by.format(DISPLAY_TIME_FORMAT);
     }
 
-    @Override
     /** Returns the serialized deadline representation. */
+    @Override
     public String toFileString() {
         return super.toFileString() + " | " + by.format(STORAGE_FORMAT);
     }
 
-    @Override
     /** Returns the user-facing deadline representation. */
+    @Override
     public String toString() {
         return super.toString() + " (by: " + displayDateTime() + ")";
     }

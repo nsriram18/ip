@@ -1,6 +1,10 @@
 package ramly.command;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.exception.RamlyException;
+import ramly.model.Task;
+import ramly.model.TaskList;
+import ramly.storage.Storage;
+import ramly.ui.Ui;
 
 /** Shared workflow for commands that change a task's completion state. */
 public abstract class TaskStateCommand extends Command {
@@ -26,8 +30,8 @@ public abstract class TaskStateCommand extends Command {
     /** Returns the concrete success message. */
     protected abstract String successMessage();
 
-    @Override
     /** Validates, updates, saves, and reports the selected task. */
+    @Override
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
         if (invalidNumber) {
             ui.show(new RamlyException().notANumber());

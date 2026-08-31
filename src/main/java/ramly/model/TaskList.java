@@ -1,8 +1,7 @@
 package ramly.model;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /** Owns the collection of tasks and its basic operations. */
 public class TaskList implements Iterable<Task> {
@@ -13,16 +12,24 @@ public class TaskList implements Iterable<Task> {
     }
 
     /** Returns the number of tasks. */
-    public int size() { return tasks.size(); }
+    public int size() {
+        return tasks.size();
+    }
 
     /** Returns the task at the specified zero-based index. */
-    public Task get(int index) { return tasks.get(index); }
+    public Task get(int index) {
+        return tasks.get(index);
+    }
 
     /** Adds a task to the collection. */
-    public void add(Task task) { tasks.add(task); }
+    public void add(Task task) {
+        tasks.add(task);
+    }
 
     /** Removes and returns the task at the specified index. */
-    public Task remove(int index) { return tasks.remove(index); }
+    public Task remove(int index) {
+        return tasks.remove(index);
+    }
 
     /** Returns tasks whose descriptions contain the keyword, ignoring case. */
     public ArrayList<Task> find(String keyword) {
@@ -36,8 +43,12 @@ public class TaskList implements Iterable<Task> {
     }
 
     /** Returns the zero-based position of a task, or -1 if it is absent. */
-    public int indexOf(Task task) { return tasks.indexOf(task); }
+    public int indexOf(Task task) {
+        return tasks.indexOf(task);
+    }
 
     @Override
-    public java.util.Iterator<Task> iterator() { return tasks.iterator(); }
+    public Iterator<Task> iterator() {
+        return tasks.iterator();
+    }
 }

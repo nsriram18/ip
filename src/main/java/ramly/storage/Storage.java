@@ -1,12 +1,16 @@
 package ramly.storage;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import ramly.model.Deadline;
+import ramly.model.Event;
+import ramly.model.Task;
+import ramly.model.TaskList;
+import ramly.model.Todo;
 
 /** Loads tasks from and saves tasks to a persistent file. */
 public class Storage {
@@ -61,6 +65,8 @@ public class Storage {
                         break;
                     case "E":
                         task = new Event(description, parts[3], parts[4]);
+                        break;
+                    default:
                         break;
                 }
 

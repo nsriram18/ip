@@ -1,6 +1,10 @@
 package ramly;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.command.Command;
+import ramly.model.TaskList;
+import ramly.parser.Parser;
+import ramly.storage.Storage;
+import ramly.ui.Ui;
 
 /** Main application class that coordinates the UI, parser, storage, and commands. */
 public class Ramly {
