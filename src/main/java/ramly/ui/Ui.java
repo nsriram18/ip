@@ -1,20 +1,35 @@
 package ramly.ui;
 
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /** Handles console input and output for Ramly. */
 public class Ui {
     private static final String LINE = "____________________________________________________________";
-    private final Scanner scanner = new Scanner(System.in);
+    private final Consumer<String> output;
+    private Scanner scanner;
+
+    /** Creates a console UI that reads from standard input and writes to standard output. */
+    public Ui() {
+        this(System.out::println);
+    }
+
+    /** Creates an output UI that sends each displayed message to the supplied consumer. */
+    public Ui(Consumer<String> output) {
+        this.output = output;
+    }
 
     /** Reads one command from the user. */
     public String readCommand() {
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
         return scanner.nextLine();
     }
 
     /** Displays a message to the user. */
     public void show(String message) {
-        System.out.println(message);
+        output.accept(message);
     }
 
     /** Displays an error message to the user. */
@@ -38,11 +53,13 @@ public class Ui {
 
     /** Displays a divider between interactions. */
     public void showLine() {
-        System.out.println(LINE);
+        show(LINE);
     }
 
     /** Releases the console input resource. */
     public void close() {
-        scanner.close();
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 }

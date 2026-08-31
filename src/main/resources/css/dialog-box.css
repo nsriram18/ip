@@ -1,0 +1,19 @@
+.dialog-label {
+    -fx-background-color: #e8e1d8;
+    -fx-background-radius: 4px 18px 18px 18px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #293241;
+    -fx-padding: 11px 15px;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(37, 44, 63, 0.08), 8, 0.2, 0, 3);
+}
+
+.reply-label {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 18px 4px 18px 18px;
+    -fx-text-fill: #293241;
+}
+
+#displayPicture {
+    -fx-effect: dropshadow(gaussian, rgba(37, 44, 63, 0.18), 8, 0.3, 0, 3);
+}
