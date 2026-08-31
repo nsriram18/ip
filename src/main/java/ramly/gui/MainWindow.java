@@ -8,11 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import ramly.Ramly;
 import ramly.ui.Ui;
 
@@ -27,8 +24,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private final Image userImage = createAvatar(Color.web("#ffb86c"), Color.web("#5b2c6f"));
-    private final Image ramlyImage = createAvatar(Color.web("#7dd3fc"), Color.web("#12355b"));
+    private final Image userImage = new Image(MainWindow.class.getResourceAsStream("/images/human-face.png"));
+    private final Image ramlyImage = new Image(MainWindow.class.getResourceAsStream("/images/robot-face.png"));
     private Ramly ramly;
 
     /** Binds the scroll position to the growing conversation, as in the tutorial. */
@@ -75,31 +72,4 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(DialogBox.getRamlyDialog(text, ramlyImage));
     }
 
-    /** Creates a small geometric avatar image without requiring platform-specific image files. */
-    private static Image createAvatar(Color background, Color foreground) {
-        int size = 96;
-        WritableImage image = new WritableImage(size, size);
-        PixelWriter writer = image.getPixelWriter();
-        double center = size / 2.0;
-        double outerRadius = size / 2.0;
-        double faceRadius = size * 0.29;
-
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                double distanceFromCenter = Math.hypot(x - center, y - center);
-                if (distanceFromCenter <= outerRadius) {
-                    writer.setColor(x, y, background);
-                } else {
-                    writer.setColor(x, y, Color.TRANSPARENT);
-                }
-                if (Math.hypot(x - center, y - size * 0.43) <= faceRadius) {
-                    writer.setColor(x, y, foreground);
-                }
-                if (y > size * 0.59 && y < size * 0.84 && Math.abs(x - center) < size * 0.26) {
-                    writer.setColor(x, y, foreground);
-                }
-            }
-        }
-        return image;
-    }
 }
