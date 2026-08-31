@@ -12,8 +12,8 @@ public class Todo extends Task {
 
     }
 
-    @Override
     /** Returns the user-facing todo representation. */
+    @Override
     public String toString() {
         return super.toString();
     }

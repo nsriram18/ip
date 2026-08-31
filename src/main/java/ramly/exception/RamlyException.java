@@ -1,9 +1,7 @@
 package ramly.exception;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
-
 /** Provides user-facing messages for invalid Ramly commands. */
-public class RamlyException extends Exception{
+public class RamlyException extends Exception {
 
     protected String s;
     /** Creates an exception for a specific command category. */
@@ -27,7 +25,8 @@ public class RamlyException extends Exception{
     }
 
     public String invalidNumber() {
-        return "Try Again! Choose a number within the number of task available! To view the number of tasks, type list!";
+        return "Try Again! Choose a number within the number of task available! "
+                + "To view the number of tasks, type list!";
     }
 
     public String correctFormat() {

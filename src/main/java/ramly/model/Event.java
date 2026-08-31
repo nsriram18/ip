@@ -14,14 +14,14 @@ public class Event extends Task {
         this.to = to;
     }
 
-    @Override
     /** Returns the serialized event representation. */
+    @Override
     public String toFileString() {
         return super.toFileString() + " | " + from + " | " + to;
     }
 
-    @Override
     /** Returns the user-facing event representation. */
+    @Override
     public String toString() {
         return super.toString() + " (from: " + this.from + " to: " + this.to + ")";
     }

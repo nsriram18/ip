@@ -1,10 +1,11 @@
 package ramly.parser;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import org.junit.jupiter.api.Test;
+
 import ramly.command.DeadlineCommand;
 import ramly.command.ExitCommand;
 import ramly.command.FindCommand;

@@ -1,6 +1,17 @@
 package ramly.parser;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.command.Command;
+import ramly.command.DeadlineCommand;
+import ramly.command.DeleteCommand;
+import ramly.command.ErrorCommand;
+import ramly.command.EventCommand;
+import ramly.command.ExitCommand;
+import ramly.command.FindCommand;
+import ramly.command.ListCommand;
+import ramly.command.MarkCommand;
+import ramly.command.TodoCommand;
+import ramly.command.UnknownCommand;
+import ramly.command.UnmarkCommand;
 
 /** Converts raw user command text into the parts needed by the application. */
 public class Parser {
@@ -8,20 +19,28 @@ public class Parser {
     public Command parse(String input) {
         try {
             switch (getCommandType(input)) {
-            case BYE: return new ExitCommand();
-            case LIST: return new ListCommand();
-            case MARK: return new MarkCommand(input);
-            case UNMARK: return new UnmarkCommand(input);
-            case TODO: return new TodoCommand(parseTodo(input));
+            case BYE:
+                return new ExitCommand();
+            case LIST:
+                return new ListCommand();
+            case MARK:
+                return new MarkCommand(input);
+            case UNMARK:
+                return new UnmarkCommand(input);
+            case TODO:
+                return new TodoCommand(parseTodo(input));
             case DEADLINE:
                 String[] deadline = parseDeadline(input);
                 return new DeadlineCommand(deadline[0].trim(), deadline[1].trim());
             case EVENT:
                 String[] event = parseEvent(input);
                 return new EventCommand(event[0].trim(), event[1].trim(), event[2].trim());
-            case DELETE: return new DeleteCommand(input);
-            case FIND: return new FindCommand(parseFind(input));
-            default: return new UnknownCommand();
+            case DELETE:
+                return new DeleteCommand(input);
+            case FIND:
+                return new FindCommand(parseFind(input));
+            default:
+                return new UnknownCommand();
             }
         } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             return new ErrorCommand("Please use the correct command format.");
@@ -32,8 +51,12 @@ public class Parser {
 
     /** Classifies a raw input before its command-specific fields are parsed. */
     public CommandType getCommandType(String input) {
-        if (input.equals("bye")) return CommandType.BYE;
-        if (input.equals("list")) return CommandType.LIST;
+        if (input.equals("bye")) {
+            return CommandType.BYE;
+        }
+        if (input.equals("list")) {
+            return CommandType.LIST;
+        }
         for (CommandType type : CommandType.values()) {
             String word = type.name().toLowerCase();
             if (!type.equals(CommandType.BYE) && !type.equals(CommandType.LIST)

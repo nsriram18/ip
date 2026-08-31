@@ -29,15 +29,17 @@ public class Task {
     }
 
     /** Marks this task as incomplete. */
-    public void unmark() { this.isDone = false; }
+    public void unmark() {
+        this.isDone = false;
+    }
 
     /** Returns the serialized representation used by storage. */
     public String toFileString() {
         return type.getCode() + " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
-    @Override
     /** Returns the user-facing representation of this task. */
+    @Override
     public String toString() {
         return (type.getIcon() + getStatusIcon() + " " + this.description);
     }

@@ -1,6 +1,10 @@
 package ramly.command;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.exception.RamlyException;
+import ramly.model.Task;
+import ramly.model.TaskList;
+import ramly.storage.Storage;
+import ramly.ui.Ui;
 
 /** Command that removes a task by its one-based user-facing number. */
 public class DeleteCommand extends Command {
@@ -22,8 +26,8 @@ public class DeleteCommand extends Command {
         this.invalidNumber = parseFailed;
     }
 
-    @Override
     /** Removes the selected task and persists the updated list. */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (invalidNumber) {
             ui.show(new RamlyException().notANumber());

@@ -1,6 +1,8 @@
 package ramly.command;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.model.TaskList;
+import ramly.storage.Storage;
+import ramly.ui.Ui;
 
 /** Represents an executable user command. */
 public abstract class Command {
@@ -8,5 +10,7 @@ public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage);
 
     /** Returns whether executing this command should end the application. */
-    public boolean isExit() { return false; }
+    public boolean isExit() {
+        return false;
+    }
 }

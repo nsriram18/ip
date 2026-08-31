@@ -2,9 +2,9 @@ package ramly.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 /** Tests task collection mutation and access. */

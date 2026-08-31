@@ -1,17 +1,21 @@
 package ramly.command;
 
-import ramly.command.*; import ramly.model.*; import ramly.parser.*; import ramly.storage.*; import ramly.ui.*; import ramly.exception.*;
+import ramly.model.TaskList;
+import ramly.storage.Storage;
+import ramly.ui.Ui;
 
 /** Command that terminates the application. */
 public class ExitCommand extends Command {
-    @Override
     /** Displays the exit message. */
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.show("I will take my leave now. Pleasure assisting you!");
         ui.showLine();
     }
 
-    @Override
     /** Indicates that the application should terminate. */
-    public boolean isExit() { return true; }
+    @Override
+    public boolean isExit() {
+        return true;
+    }
 }
