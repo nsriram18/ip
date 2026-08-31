@@ -41,8 +41,7 @@ public abstract class TaskStateCommand extends Command {
             Task task = tasks.get(taskIndex);
             update(task);
             storage.save(tasks);
-            ui.show(successMessage());
-            ui.show(" " + task);
+            ui.show(successMessage(), " " + task);
         } catch (IndexOutOfBoundsException e) {
             ui.show(new RamlyException().invalidNumber());
         }

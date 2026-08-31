@@ -37,9 +37,9 @@ public class DeleteCommand extends Command {
             Task task = tasks.get(taskIndex);
             tasks.remove(taskIndex);
             storage.save(tasks);
-            ui.show("Noted. I've removed this task:");
-            ui.show(" " + task);
-            ui.show("Now you have " + tasks.size() + " tasks in the list.");
+            ui.show("Noted. I've removed this task:",
+                    " " + task,
+                    "Now you have " + tasks.size() + " tasks in the list.");
         } catch (IndexOutOfBoundsException e) {
             ui.show(new RamlyException().invalidNumber());
         }
