@@ -17,9 +17,9 @@ public abstract class AddTaskCommand extends Command {
             Task task = createTask();
             tasks.add(task);
             storage.save(tasks);
-            ui.show("Received! I've added this task:");
-            ui.show(" " + task);
-            ui.show("Now you have " + tasks.size() + " tasks in the list.");
+            ui.show("Received! I've added this task:",
+                    " " + task,
+                    "Now you have " + tasks.size() + " tasks in the list.");
         } catch (java.time.format.DateTimeParseException e) {
             ui.show("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
         }

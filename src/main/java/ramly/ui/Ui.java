@@ -27,9 +27,11 @@ public class Ui {
         return scanner.nextLine();
     }
 
-    /** Displays a message to the user. */
-    public void show(String message) {
-        output.accept(message);
+    /** Displays one or more messages to the user in the order supplied. */
+    public void show(String... messages) {
+        for (String message : messages) {
+            output.accept(message);
+        }
     }
 
     /** Displays an error message to the user. */
