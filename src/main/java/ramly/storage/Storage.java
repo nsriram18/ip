@@ -52,38 +52,45 @@ public class Storage {
                     continue;
                 }
 
-                String[] parts = line.split(" \\| ");
-                String type = parts[0];
-                boolean isDone = parts[1].equals("1");
-                String description = parts[2];
-
-                Task task = null;
-                switch (type) {
-                    case "T":
-                        task = new Todo(description);
-                        break;
-                    case "D":
-                        task = new Deadline(description, parts[3]);
-                        break;
-                    case "E":
-                        task = new Event(description, parts[3], parts[4]);
-                        break;
-                    default:
-                        break;
+                Task task = parseTask(line);
+                if (task == null) {
+                    continue;
                 }
-
-                if (task != null) {
-                    if (isDone) {
-                        task.mark();
-                    }
-                    tasks.add(task);
-                }
+                tasks.add(task);
             }
         } catch (IOException e) {
             System.out.println("Error reading storage file: " + e.getMessage());
         }
 
         return tasks;
+    }
+
+    /** Converts one serialized storage record into a task, or null for an unknown task type. */
+    private Task parseTask(String line) {
+        String[] parts = line.split(" \\| ");
+        boolean isDone = parts[1].equals("1");
+        Task task = createTask(parts);
+
+        if (task != null && isDone) {
+            task.mark();
+        }
+        return task;
+    }
+
+    /** Creates the task subtype identified by a serialized record. */
+    private Task createTask(String[] parts) {
+        String type = parts[0];
+        String description = parts[2];
+        switch (type) {
+        case "T":
+            return new Todo(description);
+        case "D":
+            return new Deadline(description, parts[3]);
+        case "E":
+            return new Event(description, parts[3], parts[4]);
+        default:
+            return null;
+        }
     }
 
     /** Saves the current task list to the backing file. */
