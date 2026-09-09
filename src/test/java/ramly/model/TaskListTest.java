@@ -33,13 +33,15 @@ public class TaskListTest {
 
     @Test
     public void find_keyword_returnsCaseInsensitiveMatches() {
-        Task matchingTask = new Todo("Read a Book");
+        Task firstMatchingTask = new Todo("Read a Book");
         Task otherTask = new Todo("Write report");
+        Task secondMatchingTask = new Todo("Return BOOK");
         TaskList tasks = new TaskList(new ArrayList<>());
-        tasks.add(matchingTask);
+        tasks.add(firstMatchingTask);
         tasks.add(otherTask);
+        tasks.add(secondMatchingTask);
 
-        assertEquals(java.util.List.of(matchingTask), tasks.find("book"));
+        assertEquals(java.util.List.of(firstMatchingTask, secondMatchingTask), tasks.find("book"));
     }
 
     @Test

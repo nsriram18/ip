@@ -2,6 +2,7 @@ package ramly.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /** Owns the collection of tasks and its basic operations. */
 public class TaskList implements Iterable<Task> {
@@ -38,13 +39,10 @@ public class TaskList implements Iterable<Task> {
     /** Returns tasks whose descriptions contain the keyword, ignoring case. */
     public ArrayList<Task> find(String keyword) {
         assert keyword != null : "Search keyword must not be null";
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.description.toLowerCase().contains(keyword.toLowerCase())) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+        String normalizedKeyword = keyword.toLowerCase();
+        return tasks.stream()
+                .filter(task -> task.description.toLowerCase().contains(normalizedKeyword))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /** Returns the zero-based position of a task, or -1 if it is absent. */
