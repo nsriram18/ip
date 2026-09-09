@@ -1,6 +1,7 @@
 package ramly;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
@@ -36,5 +37,19 @@ public class RamlyTest {
 
         assertTrue(isExit);
         assertTrue(responses.stream().anyMatch(response -> response.contains("take my leave")));
+    }
+
+    @Test
+    public void executeCommand_nullInput_throwsAssertionError() {
+        Ramly ramly = new Ramly(temporaryDirectory.resolve("ramly.txt").toString());
+
+        assertThrows(AssertionError.class, () -> ramly.executeCommand(null, new Ui(message -> { })));
+    }
+
+    @Test
+    public void executeCommand_nullOutputUi_throwsAssertionError() {
+        Ramly ramly = new Ramly(temporaryDirectory.resolve("ramly.txt").toString());
+
+        assertThrows(AssertionError.class, () -> ramly.executeCommand("list", null));
     }
 }

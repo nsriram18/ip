@@ -18,6 +18,8 @@ public class Storage {
 
     /** Creates storage backed by the specified file path. */
     public Storage(String filePath) {
+        assert filePath != null : "Storage file path must not be null";
+        assert !filePath.isBlank() : "Storage file path must not be blank";
         this.filePath = filePath;
     }
 
@@ -86,6 +88,7 @@ public class Storage {
 
     /** Saves the current task list to the backing file. */
     public void save(TaskList tasks) {
+        assert tasks != null : "Saved task list must not be null";
         File file = new File(filePath);
         ensureFileExists(file);
 

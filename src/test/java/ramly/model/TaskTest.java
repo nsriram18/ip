@@ -1,6 +1,7 @@
 package ramly.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -65,5 +66,15 @@ public class TaskTest {
         task.mark();
 
         assertEquals("[T][X] read a book", task.toString());
+    }
+
+    @Test
+    public void constructor_nullDescription_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> new Task(null, TaskType.TODO));
+    }
+
+    @Test
+    public void constructor_nullType_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> new Task("read a book", null));
     }
 }

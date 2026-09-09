@@ -17,6 +17,7 @@ import ramly.command.UnmarkCommand;
 public class Parser {
     /** Returns the command object for an exact exit command, or null otherwise. */
     public Command parse(String input) {
+        assert input != null : "Command input must not be null";
         try {
             switch (getCommandType(input)) {
             case BYE:
@@ -51,6 +52,7 @@ public class Parser {
 
     /** Classifies a raw input before its command-specific fields are parsed. */
     public CommandType getCommandType(String input) {
+        assert input != null : "Command input must not be null";
         if (input.equals("bye")) {
             return CommandType.BYE;
         }

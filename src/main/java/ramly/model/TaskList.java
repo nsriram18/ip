@@ -7,7 +7,10 @@ import java.util.Iterator;
 public class TaskList implements Iterable<Task> {
     private final ArrayList<Task> tasks;
 
+    /** Creates a task list backed by the supplied collection. */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Backing task collection must not be null";
+        assert tasks.stream().noneMatch(task -> task == null) : "Task list must not contain null tasks";
         this.tasks = tasks;
     }
 
@@ -23,6 +26,7 @@ public class TaskList implements Iterable<Task> {
 
     /** Adds a task to the collection. */
     public void add(Task task) {
+        assert task != null : "Added task must not be null";
         tasks.add(task);
     }
 
@@ -33,6 +37,7 @@ public class TaskList implements Iterable<Task> {
 
     /** Returns tasks whose descriptions contain the keyword, ignoring case. */
     public ArrayList<Task> find(String keyword) {
+        assert keyword != null : "Search keyword must not be null";
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.description.toLowerCase().contains(keyword.toLowerCase())) {
