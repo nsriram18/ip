@@ -10,6 +10,7 @@ import ramly.command.FindCommand;
 import ramly.command.ListCommand;
 import ramly.command.MarkCommand;
 import ramly.command.TodoCommand;
+import ramly.command.UndoCommand;
 import ramly.command.UnknownCommand;
 import ramly.command.UnmarkCommand;
 
@@ -40,6 +41,10 @@ public class Parser {
                 return new DeleteCommand(input);
             case FIND:
                 return new FindCommand(parseFind(input));
+            case UNDO:
+                return input.equals("undo")
+                        ? new UndoCommand()
+                        : new ErrorCommand("Please use the correct command format.");
             default:
                 return new UnknownCommand();
             }

@@ -1,6 +1,7 @@
 package ramly.command;
 
 import ramly.model.Task;
+import ramly.model.TaskList;
 
 /** Command that marks a task as done. */
 public class MarkCommand extends TaskStateCommand {
@@ -11,8 +12,8 @@ public class MarkCommand extends TaskStateCommand {
 
     /** Marks the selected task as completed. */
     @Override
-    protected void update(Task task) {
-        task.mark();
+    protected Task update(TaskList tasks, int taskIndex) {
+        return tasks.mark(taskIndex);
     }
 
     /** Returns the confirmation shown after marking a task. */
