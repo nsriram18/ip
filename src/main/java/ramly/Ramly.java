@@ -42,8 +42,11 @@ public class Ramly {
      * @return true when the command requests that the application exits
      */
     public boolean executeCommand(String input, Ui outputUi) {
+        assert input != null : "Command input must not be null";
+        assert outputUi != null : "Output UI must not be null";
         try {
             Command command = parser.parse(input);
+            assert command != null : "Parser must return a command";
             command.execute(tasks, outputUi, storage);
             return command.isExit();
         } catch (RuntimeException e) {

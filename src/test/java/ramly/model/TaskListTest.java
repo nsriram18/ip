@@ -2,6 +2,7 @@ package ramly.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 
@@ -39,5 +40,32 @@ public class TaskListTest {
         tasks.add(otherTask);
 
         assertEquals(java.util.List.of(matchingTask), tasks.find("book"));
+    }
+
+    @Test
+    public void constructor_nullCollection_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> new TaskList(null));
+    }
+
+    @Test
+    public void constructor_collectionContainingNull_throwsAssertionError() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(null);
+
+        assertThrows(AssertionError.class, () -> new TaskList(tasks));
+    }
+
+    @Test
+    public void add_nullTask_throwsAssertionError() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+
+        assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
+
+    @Test
+    public void find_nullKeyword_throwsAssertionError() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+
+        assertThrows(AssertionError.class, () -> tasks.find(null));
     }
 }

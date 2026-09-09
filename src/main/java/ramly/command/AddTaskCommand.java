@@ -15,6 +15,7 @@ public abstract class AddTaskCommand extends Command {
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             Task task = createTask();
+            assert task != null : "Add-task commands must create a task";
             tasks.add(task);
             storage.save(tasks);
             ui.show("Received! I've added this task:",

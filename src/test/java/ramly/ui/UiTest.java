@@ -1,6 +1,7 @@
 package ramly.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 
@@ -16,5 +17,17 @@ public class UiTest {
         ui.show("first", "second", "third");
 
         assertEquals(java.util.List.of("first", "second", "third"), messages);
+    }
+
+    @Test
+    public void constructor_nullOutput_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> new Ui(null));
+    }
+
+    @Test
+    public void show_nullMessage_throwsAssertionError() {
+        Ui ui = new Ui(message -> { });
+
+        assertThrows(AssertionError.class, () -> ui.show("first", null));
     }
 }

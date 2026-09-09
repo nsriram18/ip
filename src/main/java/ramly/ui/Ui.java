@@ -16,6 +16,7 @@ public class Ui {
 
     /** Creates an output UI that sends each displayed message to the supplied consumer. */
     public Ui(Consumer<String> output) {
+        assert output != null : "UI output consumer must not be null";
         this.output = output;
     }
 
@@ -29,7 +30,9 @@ public class Ui {
 
     /** Displays one or more messages to the user in the order supplied. */
     public void show(String... messages) {
+        assert messages != null : "Displayed messages must not be null";
         for (String message : messages) {
+            assert message != null : "Displayed message must not be null";
             output.accept(message);
         }
     }

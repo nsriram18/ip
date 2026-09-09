@@ -3,6 +3,7 @@ package ramly.parser;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +46,10 @@ public class ParserTest {
     public void parse_findCommand_returnsFindCommand() {
         assertEquals(CommandType.FIND, parser.getCommandType("find book"));
         assertInstanceOf(FindCommand.class, parser.parse("find book"));
+    }
+
+    @Test
+    public void parse_nullInput_throwsAssertionError() {
+        assertThrows(AssertionError.class, () -> parser.parse(null));
     }
 }

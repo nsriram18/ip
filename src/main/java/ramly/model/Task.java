@@ -8,6 +8,8 @@ public class Task {
 
     /** Creates an incomplete task with the given description and type. */
     public Task(String description, TaskType type) {
+        assert description != null : "Task description must not be null";
+        assert type != null : "Task type must not be null";
         this.description = description;
         this.isDone = false;
         this.type = type;
