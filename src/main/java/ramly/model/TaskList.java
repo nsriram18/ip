@@ -7,6 +7,13 @@ import java.util.stream.Collectors;
 /** Owns the collection of tasks and its basic operations. */
 public class TaskList implements Iterable<Task> {
     private final ArrayList<Task> tasks;
+    private UndoOperation undoOperation;
+
+    /** Reverses one task-list mutation and describes its result. */
+    @FunctionalInterface
+    private interface UndoOperation {
+        UndoResult undo();
+    }
 
     /** Creates a task list backed by the supplied collection. */
     public TaskList(ArrayList<Task> tasks) {
@@ -28,12 +35,62 @@ public class TaskList implements Iterable<Task> {
     /** Adds a task to the collection. */
     public void add(Task task) {
         assert task != null : "Added task must not be null";
+        int addedIndex = tasks.size();
         tasks.add(task);
+        undoOperation = () -> {
+            Task removedTask = tasks.remove(addedIndex);
+            return new UndoResult(UndoResult.Action.ADD, removedTask, tasks.size());
+        };
     }
 
     /** Removes and returns the task at the specified index. */
     public Task remove(int index) {
-        return tasks.remove(index);
+        Task removedTask = tasks.remove(index);
+        undoOperation = () -> {
+            tasks.add(index, removedTask);
+            return new UndoResult(UndoResult.Action.DELETE, removedTask, tasks.size());
+        };
+        return removedTask;
+    }
+
+    /** Marks the task at the specified index and records its previous status. */
+    public Task mark(int index) {
+        Task task = tasks.get(index);
+        boolean wasDone = task.isDone;
+        task.mark();
+        recordStatusUndo(task, wasDone);
+        return task;
+    }
+
+    /** Unmarks the task at the specified index and records its previous status. */
+    public Task unmark(int index) {
+        Task task = tasks.get(index);
+        boolean wasDone = task.isDone;
+        task.unmark();
+        recordStatusUndo(task, wasDone);
+        return task;
+    }
+
+    /** Records how to restore a task's completion status. */
+    private void recordStatusUndo(Task task, boolean wasDone) {
+        undoOperation = () -> {
+            if (wasDone) {
+                task.mark();
+            } else {
+                task.unmark();
+            }
+            return new UndoResult(UndoResult.Action.STATUS_CHANGE, task, tasks.size());
+        };
+    }
+
+    /** Reverses and consumes the latest mutation, or returns null when none exists. */
+    public UndoResult undo() {
+        if (undoOperation == null) {
+            return null;
+        }
+        UndoOperation operationToExecute = undoOperation;
+        undoOperation = null;
+        return operationToExecute.undo();
     }
 
     /** Returns tasks whose descriptions contain the keyword, ignoring case. */

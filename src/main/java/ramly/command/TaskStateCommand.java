@@ -25,8 +25,8 @@ public abstract class TaskStateCommand extends Command {
         invalidNumber = parseFailed;
     }
 
-    /** Applies the concrete completion-state change. */
-    protected abstract void update(Task task);
+    /** Applies the concrete completion-state change and returns the affected task. */
+    protected abstract Task update(TaskList tasks, int taskIndex);
     /** Returns the concrete success message. */
     protected abstract String successMessage();
 
@@ -38,8 +38,7 @@ public abstract class TaskStateCommand extends Command {
             return;
         }
         try {
-            Task task = tasks.get(taskIndex);
-            update(task);
+            Task task = update(tasks, taskIndex);
             storage.save(tasks);
             ui.show(successMessage(), " " + task);
         } catch (IndexOutOfBoundsException e) {

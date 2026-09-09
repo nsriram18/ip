@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import ramly.command.DeadlineCommand;
+import ramly.command.ErrorCommand;
 import ramly.command.ExitCommand;
 import ramly.command.FindCommand;
+import ramly.command.UndoCommand;
 import ramly.command.UnknownCommand;
 
 /** Tests command classification and construction. */
@@ -51,5 +53,23 @@ public class ParserTest {
     @Test
     public void parse_nullInput_throwsAssertionError() {
         assertThrows(AssertionError.class, () -> parser.parse(null));
+    }
+
+    @Test
+    public void parse_undoCommand_returnsUndoCommand() {
+        assertEquals(CommandType.UNDO, parser.getCommandType("undo"));
+        assertInstanceOf(UndoCommand.class, parser.parse("undo"));
+    }
+
+    @Test
+    public void parse_undoWithArguments_returnsErrorCommand() {
+        assertEquals(CommandType.UNDO, parser.getCommandType("undo 1"));
+        assertInstanceOf(ErrorCommand.class, parser.parse("undo 1"));
+    }
+
+    @Test
+    public void parse_undoWithDifferentCase_returnsUnknownCommand() {
+        assertInstanceOf(UnknownCommand.class, parser.parse("Undo"));
+        assertInstanceOf(UnknownCommand.class, parser.parse("UNDO"));
     }
 }

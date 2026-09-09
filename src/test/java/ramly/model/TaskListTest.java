@@ -1,6 +1,7 @@
 package ramly.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -69,5 +70,62 @@ public class TaskListTest {
         TaskList tasks = new TaskList(new ArrayList<>());
 
         assertThrows(AssertionError.class, () -> tasks.find(null));
+    }
+
+    @Test
+    public void undo_addedTask_removesTaskAndConsumesHistory() {
+        Task task = new Todo("read a book");
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(task);
+
+        UndoResult result = tasks.undo();
+
+        assertEquals(UndoResult.Action.ADD, result.getAction());
+        assertSame(task, result.getTask());
+        assertEquals(0, tasks.size());
+        assertNull(tasks.undo());
+    }
+
+    @Test
+    public void undo_deletedTask_restoresOriginalPosition() {
+        Task firstTask = new Todo("first");
+        Task deletedTask = new Todo("second");
+        Task thirdTask = new Todo("third");
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(firstTask);
+        tasks.add(deletedTask);
+        tasks.add(thirdTask);
+        tasks.remove(1);
+
+        UndoResult result = tasks.undo();
+
+        assertEquals(UndoResult.Action.DELETE, result.getAction());
+        assertSame(deletedTask, tasks.get(1));
+        assertSame(thirdTask, tasks.get(2));
+    }
+
+    @Test
+    public void undo_statusChanges_restoresPreviousStatusIncludingNoOps() {
+        Task task = new Todo("read a book");
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(task);
+
+        tasks.mark(0);
+        tasks.undo();
+        assertEquals("[ ]", task.getStatusIcon());
+
+        task.mark();
+        tasks.unmark(0);
+        tasks.undo();
+        assertEquals("[X]", task.getStatusIcon());
+
+        tasks.mark(0);
+        tasks.undo();
+        assertEquals("[X]", task.getStatusIcon());
+
+        task.unmark();
+        tasks.unmark(0);
+        tasks.undo();
+        assertEquals("[ ]", task.getStatusIcon());
     }
 }

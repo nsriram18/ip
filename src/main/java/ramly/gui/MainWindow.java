@@ -33,7 +33,7 @@ public class MainWindow extends AnchorPane {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         addRamlyDialog("Hello! I’m Ramly, your tiny but mighty task sidekick.\n"
-                + "Try `todo`, `deadline`, `event`, `list`, `find`, `mark`, `unmark`, `delete`, or `bye`.");
+                + "Try `todo`, `deadline`, `event`, `list`, `find`, `mark`, `unmark`, `delete`, `undo`, or `bye`.");
     }
 
     /** Injects the command engine used by both the GUI and text interfaces. */
