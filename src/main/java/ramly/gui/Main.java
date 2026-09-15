@@ -34,7 +34,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to load the Ramly GUI.", e);
+            throw new IllegalStateException("Unable to load the Pip GUI.", e);
         }
     }
 }

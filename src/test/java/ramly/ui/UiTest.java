@@ -1,6 +1,7 @@
 package ramly.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,6 +44,7 @@ public class UiTest {
 
         assertTrue(messages.contains("Hey, I'm Pip—your pocket pathfinder."));
         assertTrue(messages.contains("What shall we tackle next?"));
+        assertFalse(messages.stream().anyMatch(message -> message.contains("Ramly")));
     }
 
     @Test
