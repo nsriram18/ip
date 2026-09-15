@@ -1,86 +1,170 @@
 # Pip User Guide
 
-// Product screenshot goes here
+Pip is your friendly pocket pathfinder for keeping everyday tasks on a clear trail. Add todos, deadlines, and
+events; find and update them; or retrace your latest step with `undo`.
 
-Pip is a calm pocket pathfinder that helps you keep everyday tasks on a clear trail. Its warm, concise responses
-celebrate progress without changing the familiar command workflow.
+![Pip task manager interface](Ui.png)
 
-## Command input
+## Quick start
 
-Pip ignores leading and trailing whitespace and accepts repeated spaces or tabs between command parts. Command words
-and parameter markers remain case-sensitive. A command can contain at most 500 characters.
+1. Ensure that **Java 25** is installed on your computer.
+1. Place a `pip.jar` built for your operating system and processor in a folder of your choice.
+1. Open a terminal in that folder and run:
 
-Task descriptions can contain ordinary Unicode text and punctuation. They cannot be blank, exceed 200 characters,
-or contain `|`, line breaks, or control characters because those values cannot be represented safely in the task
-data file. Find keywords have the same rules and can contain at most 100 characters.
+   ```shell
+   java -jar pip.jar
+   ```
 
-Commands that do not accept parameters must contain only their command word:
+1. Type a command in the box at the bottom of the window, then press <kbd>Enter</kbd> or select **Send**.
+
+Pip saves every successful change automatically and reloads your tasks the next time it starts from the same
+folder.
+
+> [!TIP]
+> Command words and markers such as `/by`, `/from`, and `/to` are case-sensitive. Enter them in lowercase as shown
+> in this guide. Extra spaces at the start, end, or between words are harmless.
+
+## Understanding the task list
+
+Each task has a type icon and a completion box:
+
+| Symbol | Meaning |
+| --- | --- |
+| `[•]` | Todo |
+| `[⏳]` | Deadline |
+| `[◆]` | Event |
+| `[ ]` | Not completed |
+| `[✓]` | Completed |
+
+For example, `[⏳][✓] submit report (by: Oct 15 2026, 6:30PM)` is a completed deadline.
+
+## Features
+
+### Adding a todo: `todo`
+
+Adds a task without a date or time.
+
+Format: `todo <description>`
+
+Example:
 
 ```text
-list
-undo
-bye
+todo buy milk
 ```
 
-Supplying extra text produces a command-specific message such as `Use this format: undo`.
+Pip adds `[•][ ] buy milk` to the end of the list.
 
-## Adding tasks
+### Adding a deadline: `deadline`
 
-Add a todo with `todo <description>`.
+Adds a task that must be completed by a date, with an optional time.
 
-Add a deadline with `deadline <description> /by <date or date-time>`. Accepted values are:
+Format: `deadline <description> /by <date or date-time>`
 
-- `yyyy-MM-dd`, such as `2026-10-15`
-- `yyyy-MM-dd HHmm`, such as `2026-10-15 1830`
-- `d/M/yyyy HHmm`, such as `15/10/2026 1830`
-
-Dates are checked strictly, so impossible dates such as February 30 are rejected.
-
-Add an event with:
+Examples:
 
 ```text
-event <description> /from <date-time> /to <date-time>
+deadline submit report /by 2026-10-15
+deadline submit report /by 2026-10-15 1830
+deadline submit report /by 15/10/2026 1830
 ```
 
-Each event boundary must use `yyyy-MM-dd HHmm` or `d/M/yyyy HHmm`, and the start must be earlier than the end.
-For example:
+Accepted values are `yyyy-MM-dd`, `yyyy-MM-dd HHmm`, and `d/M/yyyy HHmm`. Pip checks calendar dates strictly, so
+values such as `2026-02-30` are rejected.
+
+### Adding an event: `event`
+
+Adds a task with a start and end. The start must be earlier than the end.
+
+Format: `event <description> /from <date-time> /to <date-time>`
+
+Example:
 
 ```text
 event project meeting /from 2026-10-15 1400 /to 2026-10-15 1500
 ```
 
-Each parameter marker must appear exactly once and in the documented order. Pip rejects an exact duplicate task,
-ignoring differences in description capitalization and repeated whitespace. Tasks with the same description but
-different dates or time bounds remain valid.
+Both date-times must use `yyyy-MM-dd HHmm` or `d/M/yyyy HHmm`. Each marker must appear exactly once and in the
+order shown.
 
-## Selecting tasks
+### Viewing all tasks: `list`
 
-`mark`, `unmark`, and `delete` require one positive whole-number trail marker, such as `mark 1`. Zero, negative
-numbers, decimal values, words, trailing arguments, and numbers outside the displayed list are rejected.
+Shows every task with its current number. Use these numbers with `mark`, `unmark`, and `delete`.
 
-## Storage recovery
+```text
+list
+```
 
-Pip creates the `data/ramly.txt` UTF-8 data file when it is missing. Saves use a temporary file and replace the data
-file only after the complete update is written. If a save fails, Pip restores the in-memory task list and its undo
-history, then reports that no changes were applied.
+Example output:
 
-If stored records are malformed, Pip loads the valid records, creates a neighboring `.bak` copy of the original
-file, and identifies the skipped line numbers. Legacy event records containing free-text boundaries remain readable.
-If the file cannot be read or safely backed up, Pip reports the problem and disables command entry rather than
-running with data that cannot be persisted safely.
+```text
+Here's your trail ahead:
+1.[•][ ] buy milk
+2.[⏳][ ] submit report (by: Oct 15 2026, 6:30PM)
+```
 
-## Undoing the previous command
+If there are no tasks, Pip tells you that your trail is clear.
 
-Use `undo` to reverse the most recent successful command that changed the task list.
+### Finding tasks: `find`
+
+Shows tasks whose descriptions contain the keyword. Matching is case-insensitive, and the displayed numbers are
+the tasks' numbers in the full list.
+
+Format: `find <keyword>`
 
 Example:
+
+```text
+find report
+```
+
+If nothing matches, no task entries appear below the results heading.
+
+### Marking a task as completed: `mark`
+
+Format: `mark <task number>`
+
+Example:
+
+```text
+mark 2
+```
+
+Pip changes the selected task's completion box to `[✓]`.
+
+### Marking a task as not completed: `unmark`
+
+Format: `unmark <task number>`
+
+Example:
+
+```text
+unmark 2
+```
+
+Pip changes the selected task's completion box back to `[ ]`.
+
+### Deleting a task: `delete`
+
+Format: `delete <task number>`
+
+Example:
+
+```text
+delete 1
+```
+
+Pip removes the selected task. Run `list` first if you are unsure of its current number.
+
+### Undoing the latest change: `undo`
+
+Reverses the most recent successful `todo`, `deadline`, `event`, `mark`, `unmark`, or `delete` command.
 
 ```text
 todo buy milk
 undo
 ```
 
-Expected undo output:
+Example output from `undo`:
 
 ```text
 One step back—I've removed the task you added:
@@ -88,20 +172,57 @@ One step back—I've removed the task you added:
 Now you have 0 tasks in the list.
 ```
 
-Only one command can be undone. Read-only commands such as `list` and `find`, as well as rejected commands, do not
-replace the available undo. If there is nothing to undo, Pip displays:
+Only one change can be undone. `list`, `find`, and rejected commands do not replace the available undo. Undo
+history is cleared when Pip restarts; if there is nothing to undo, Pip displays `No steps to retrace yet.`
+
+### Ending the session: `bye`
 
 ```text
-No steps to retrace yet.
+bye
 ```
 
-Undo history lasts only for the current application session and is cleared when Pip restarts.
+Pip saves your trail, displays `Trail saved. See you at the next checkpoint!`, and disables command entry. You can
+then close the window.
 
-## Feature ABC
+## Input rules and common errors
 
-// Feature details
+- Task numbers must be positive whole numbers currently shown by `list`; for example, `mark 1`.
+- Task descriptions cannot be empty or longer than 200 characters. Find keywords cannot exceed 100 characters.
+- Commands cannot exceed 500 characters.
+- Descriptions and keywords may contain ordinary Unicode text and punctuation, but not `|`, line breaks, or control
+  characters.
+- An exact duplicate task is rejected. Capitalization and repeated whitespace do not make a task unique, although
+  deadlines with different due dates and events with different time ranges are allowed.
+- Commands without parameters must be entered alone: `list`, `undo`, or `bye`.
 
+When a command is invalid, Pip explains what went wrong and leaves the task list unchanged. For example,
+`deadline submit report` produces:
 
-## Feature XYZ
+```text
+Use this format: deadline <description> /by <date or date-time>
+```
 
-// Feature details
+## Saving and recovering data
+
+Pip stores tasks in `data/ramly.txt`, relative to the folder from which you launch the JAR. The folder and file are
+created automatically when missing.
+
+Avoid editing this file while Pip is running. If Pip finds malformed or duplicate records at startup, it loads the
+valid records, reports the skipped line numbers, and creates a `.bak` copy beside the data file. If the file cannot
+be accessed or backed up safely, Pip reports the problem and disables command entry. A failed save leaves both the
+on-screen task list and the previous data file unchanged.
+
+## Command summary
+
+| Action | Format | Example |
+| --- | --- | --- |
+| Add a todo | `todo <description>` | `todo buy milk` |
+| Add a deadline | `deadline <description> /by <date or date-time>` | `deadline submit report /by 2026-10-15 1830` |
+| Add an event | `event <description> /from <date-time> /to <date-time>` | `event meeting /from 2026-10-15 1400 /to 2026-10-15 1500` |
+| View all tasks | `list` | `list` |
+| Find tasks | `find <keyword>` | `find report` |
+| Mark completed | `mark <task number>` | `mark 2` |
+| Mark not completed | `unmark <task number>` | `unmark 2` |
+| Delete a task | `delete <task number>` | `delete 1` |
+| Undo the latest change | `undo` | `undo` |
+| End the session | `bye` | `bye` |
