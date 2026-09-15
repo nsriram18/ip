@@ -117,11 +117,11 @@ public class TaskListTest {
         task.mark();
         tasks.unmark(0);
         tasks.undo();
-        assertEquals("[X]", task.getStatusIcon());
+        assertEquals("[✓]", task.getStatusIcon());
 
         tasks.mark(0);
         tasks.undo();
-        assertEquals("[X]", task.getStatusIcon());
+        assertEquals("[✓]", task.getStatusIcon());
 
         task.unmark();
         tasks.unmark(0);

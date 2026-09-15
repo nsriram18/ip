@@ -19,7 +19,7 @@ public class TaskTest {
         Task task = new Todo("read a book");
         task.mark();
 
-        assertEquals("[X]", task.getStatusIcon());
+        assertEquals("[✓]", task.getStatusIcon());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TaskTest {
     public void toString_newTask_returnsFormattedDisplayText() {
         Task task = new Todo("read a book");
 
-        assertEquals("[T][ ] read a book", task.toString());
+        assertEquals("[•][ ] read a book", task.toString());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TaskTest {
         Task task = new Todo("read a book");
         task.mark();
 
-        assertEquals("[T][X] read a book", task.toString());
+        assertEquals("[•][✓] read a book", task.toString());
     }
 
     @Test

@@ -45,14 +45,14 @@ public class Ui {
     /** Displays the initial banner and greeting. */
     public void showWelcome() {
         showLine();
-        show(" ____                 _       \n"
-                + "|  _ \\ __ _ _ __ ___ | |_   _ \n"
-                + "| |_) / _` | '_ ` _ \\| | | | |\n"
-                + "|  _ < (_| | | | | | | |_| |\n"
-                + "|_| \\_\\__,_|_| |_| |_|_|\\__, |\n"
-                + "                        |___/ \n");
-        show("Hello! I'm Ramly.");
-        show("What do you have in mind today?");
+        show(" ____  _       \n"
+                + "|  _ \\(_)_ __  \n"
+                + "| |_) | | '_ \\ \n"
+                + "|  __/| | |_) |\n"
+                + "|_|   |_| .__/ \n"
+                + "        |_|    \n");
+        show("Hey, I'm Pip—your pocket pathfinder.");
+        show("What shall we tackle next?");
         showLine();
     }
 

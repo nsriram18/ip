@@ -29,7 +29,7 @@ public class RamlyTest {
         boolean isExit = ramly.executeCommand("todo buy milk", new Ui(responses::add));
 
         assertFalse(isExit);
-        assertTrue(responses.stream().anyMatch(response -> response.contains("I've added this task")));
+        assertTrue(responses.stream().anyMatch(response -> response.contains("Trail marker set")));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class RamlyTest {
         boolean isExit = ramly.executeCommand("bye", new Ui(responses::add));
 
         assertTrue(isExit);
-        assertTrue(responses.stream().anyMatch(response -> response.contains("take my leave")));
+        assertTrue(responses.stream().anyMatch(response -> response.contains("next checkpoint")));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class RamlyTest {
         execute(ramly, "undo", responses);
 
         assertEquals(List.of(
-                "Okay, I've removed the task added by the previous command:",
-                " [T][ ] buy milk",
+                "One step back—I've removed the task you added:",
+                " [•][ ] buy milk",
                 "Now you have 0 tasks in the list."), responses);
         assertEquals("", Files.readString(storageFile));
     }
@@ -85,16 +85,16 @@ public class RamlyTest {
         execute(ramly, "undo", responses);
 
         assertEquals(List.of(
-                "Okay, I've restored the task deleted by the previous command:",
-                " [T][ ] second",
+                "One step back—I've restored the task you removed:",
+                " [•][ ] second",
                 "Now you have 3 tasks in the list."), responses);
 
         execute(ramly, "list", responses);
         assertEquals(List.of(
-                "Here are the tasks in your list:",
-                "1.[T][ ] first",
-                "2.[T][ ] second",
-                "3.[T][ ] third"), responses);
+                "Here's your trail ahead:",
+                "1.[•][ ] first",
+                "2.[•][ ] second",
+                "3.[•][ ] third"), responses);
     }
 
     @Test
@@ -104,11 +104,11 @@ public class RamlyTest {
         execute(ramly, "deadline submit report /by 2019-10-15", responses);
 
         execute(ramly, "undo", responses);
-        assertEquals(" [D][ ] submit report (by: Oct 15 2019)", responses.get(1));
+        assertEquals(" [⏳][ ] submit report (by: Oct 15 2019)", responses.get(1));
 
         execute(ramly, "event meeting /from 10am /to 11am", responses);
         execute(ramly, "undo", responses);
-        assertEquals(" [E][ ] meeting (from: 10am to: 11am)", responses.get(1));
+        assertEquals(" [◆][ ] meeting (from: 10am to: 11am)", responses.get(1));
     }
 
     @Test
@@ -121,15 +121,15 @@ public class RamlyTest {
         execute(ramly, "undo", responses);
 
         assertEquals(List.of(
-                "Okay, I've restored this task's previous status:",
-                " [T][ ] buy milk"), responses);
+                "One step back—I've restored this task's previous status:",
+                " [•][ ] buy milk"), responses);
 
         execute(ramly, "mark 1", responses);
         execute(ramly, "unmark 1", responses);
         execute(ramly, "undo", responses);
         assertEquals(List.of(
-                "Okay, I've restored this task's previous status:",
-                " [T][X] buy milk"), responses);
+                "One step back—I've restored this task's previous status:",
+                " [•][✓] buy milk"), responses);
     }
 
     @Test
@@ -148,7 +148,7 @@ public class RamlyTest {
 
         execute(ramly, "undo", responses);
 
-        assertEquals("Okay, I've removed the task added by the previous command:", responses.get(0));
+        assertEquals("One step back—I've removed the task you added:", responses.get(0));
     }
 
     @Test
@@ -160,10 +160,10 @@ public class RamlyTest {
 
         execute(ramly, "undo", responses);
         execute(ramly, "list", responses);
-        assertEquals(List.of("Here are the tasks in your list:", "1.[T][ ] first"), responses);
+        assertEquals(List.of("Here's your trail ahead:", "1.[•][ ] first"), responses);
 
         execute(ramly, "undo", responses);
-        assertEquals(List.of("There is no command to undo."), responses);
+        assertEquals(List.of("No steps to retrace yet."), responses);
     }
 
     @Test
@@ -176,9 +176,9 @@ public class RamlyTest {
 
         execute(secondSession, "undo", responses);
 
-        assertEquals(List.of("There is no command to undo."), responses);
+        assertEquals(List.of("No steps to retrace yet."), responses);
         execute(secondSession, "list", responses);
-        assertEquals(List.of("Here are the tasks in your list:", "1.[T][ ] buy milk"), responses);
+        assertEquals(List.of("Here's your trail ahead:", "1.[•][ ] buy milk"), responses);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class RamlyTest {
         assertEquals(List.of("Please use the correct command format."), responses);
 
         execute(ramly, "Undo", responses);
-        assertEquals(List.of("OOPS! I'm sorry but I don't understand what that means! Try Again!"), responses);
+        assertEquals(List.of("I lost that trail. Check the command and try again!"), responses);
     }
 
     /** Executes a command after clearing responses from the previous command. */

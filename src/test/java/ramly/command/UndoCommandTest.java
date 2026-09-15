@@ -22,7 +22,7 @@ public class UndoCommandTest {
 
         new UndoCommand().execute(tasks, new Ui(responses::add), storage);
 
-        assertEquals(List.of("There is no command to undo."), responses);
+        assertEquals(List.of("No steps to retrace yet."), responses);
         assertEquals(0, storage.saveCount);
     }
 

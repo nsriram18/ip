@@ -37,7 +37,7 @@ public class DeleteCommand extends Command {
             Task task = tasks.get(taskIndex);
             tasks.remove(taskIndex);
             storage.save(tasks);
-            ui.show("Noted. I've removed this task:",
+            ui.show("Cleared from the trail! I've removed this task:",
                     " " + task,
                     "Now you have " + tasks.size() + " tasks in the list.");
         } catch (IndexOutOfBoundsException e) {

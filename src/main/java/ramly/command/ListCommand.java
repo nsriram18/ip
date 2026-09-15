@@ -10,10 +10,10 @@ public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (tasks.size() == 0) {
-            ui.show("You have no tasks in the list! Add some tasks to view them!");
+            ui.show("Your trail is clear. Add a task when you're ready!");
             return;
         }
-        ui.show("Here are the tasks in your list:");
+        ui.show("Here's your trail ahead:");
         for (int i = 0; i < tasks.size(); i++) {
             ui.show(i + 1 + "." + tasks.get(i));
         }

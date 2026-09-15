@@ -19,6 +19,6 @@ public class UnmarkCommand extends TaskStateCommand {
     /** Returns the confirmation shown after unmarking a task. */
     @Override
     protected String successMessage() {
-        return "Orite, I've marked this task as not done yet:";
+        return "This one is back on the trail:";
     }
 }

@@ -20,7 +20,7 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ArrayList<Task> matchingTasks = tasks.find(keyword);
-        ui.show("Here are the matching tasks in your list:");
+        ui.show("I found these matching trail markers:");
         for (Task task : matchingTasks) {
             ui.show((tasks.indexOf(task) + 1) + "." + task);
         }

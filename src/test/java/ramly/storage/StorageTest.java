@@ -47,8 +47,8 @@ public class StorageTest {
         ArrayList<Task> tasks = new Storage(storageFile.toString()).load();
 
         assertEquals(3, tasks.size());
-        assertEquals("[T][X] read a book", tasks.get(0).toString());
-        assertEquals("[D][ ] submit report (by: Oct 15 2019)", tasks.get(1).toString());
-        assertEquals("[E][ ] team meeting (from: 10am to: 11am)", tasks.get(2).toString());
+        assertEquals("[•][✓] read a book", tasks.get(0).toString());
+        assertEquals("[⏳][ ] submit report (by: Oct 15 2019)", tasks.get(1).toString());
+        assertEquals("[◆][ ] team meeting (from: 10am to: 11am)", tasks.get(2).toString());
     }
 }

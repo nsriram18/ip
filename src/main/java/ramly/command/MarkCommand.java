@@ -19,6 +19,6 @@ public class MarkCommand extends TaskStateCommand {
     /** Returns the confirmation shown after marking a task. */
     @Override
     protected String successMessage() {
-        return "Nice! I've marked this task as done:";
+        return "Checkpoint reached! Nice work:";
     }
 }

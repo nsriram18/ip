@@ -12,22 +12,22 @@ public class UndoCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         UndoResult result = tasks.undo();
         if (result == null) {
-            ui.show("There is no command to undo.");
+            ui.show("No steps to retrace yet.");
             return;
         }
 
         storage.save(tasks);
         switch (result.getAction()) {
         case ADD:
-            ui.show("Okay, I've removed the task added by the previous command:",
+            ui.show("One step back—I've removed the task you added:",
                     " " + result.getTask(), taskCountMessage(result.getTaskCount()));
             break;
         case DELETE:
-            ui.show("Okay, I've restored the task deleted by the previous command:",
+            ui.show("One step back—I've restored the task you removed:",
                     " " + result.getTask(), taskCountMessage(result.getTaskCount()));
             break;
         case STATUS_CHANGE:
-            ui.show("Okay, I've restored this task's previous status:", " " + result.getTask());
+            ui.show("One step back—I've restored this task's previous status:", " " + result.getTask());
             break;
         default:
             assert false : "Every undo action must have a display message";

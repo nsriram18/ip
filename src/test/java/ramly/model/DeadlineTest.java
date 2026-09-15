@@ -14,7 +14,7 @@ public class DeadlineTest {
         Deadline deadline = new Deadline("return book", "2019-10-15");
 
         assertEquals(LocalDateTime.of(2019, 10, 15, 0, 0), deadline.getBy());
-        assertEquals("[D][ ] return book (by: Oct 15 2019)", deadline.toString());
+        assertEquals("[⏳][ ] return book (by: Oct 15 2019)", deadline.toString());
     }
 
     @Test
@@ -22,7 +22,7 @@ public class DeadlineTest {
         Deadline deadline = new Deadline("return book", "2/12/2019 1800");
 
         assertEquals(LocalDateTime.of(2019, 12, 2, 18, 0), deadline.getBy());
-        assertEquals("[D][ ] return book (by: Dec 02 2019, 6:00pm)", deadline.toString());
+        assertEquals("[⏳][ ] return book (by: Dec 02 2019, 6:00pm)", deadline.toString());
         assertEquals("D | 0 | return book | 2019-12-02T18:00:00", deadline.toFileString());
     }
 

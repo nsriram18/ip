@@ -50,7 +50,7 @@ public class Ramly {
             command.execute(tasks, outputUi, storage);
             return command.isExit();
         } catch (RuntimeException e) {
-            outputUi.showError("I could not process that command. Please check its format.");
+            outputUi.showError("I hit a rough patch and couldn't process that command. Please check its format.");
             return false;
         }
     }

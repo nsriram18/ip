@@ -9,7 +9,7 @@ public class ExitCommand extends Command {
     /** Displays the exit message. */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.show("I will take my leave now. Pleasure assisting you!");
+        ui.show("Trail saved. See you at the next checkpoint!");
         ui.showLine();
     }
 

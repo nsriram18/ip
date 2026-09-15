@@ -13,20 +13,19 @@ public class RamlyException extends Exception {
     }
 
     public String randomWord() {
-        return "OOPS! I'm sorry but I don't understand what that means! Try Again!";
+        return "I lost that trail. Check the command and try again!";
     }
 
     public String emptyString() {
-        return "The description of " + this.s + " cannot be empty! Try Again!";
+        return "That " + this.s + " needs a description before we set off. Try again!";
     }
 
     public String notANumber() {
-        return "This is not a number! Try Again with a number!";
+        return "That isn't a trail-marker number. Try again with a number!";
     }
 
     public String invalidNumber() {
-        return "Try Again! Choose a number within the number of task available! "
-                + "To view the number of tasks, type list!";
+        return "That trail marker doesn't exist. Use list to check the available numbers.";
     }
 
     public String correctFormat() {

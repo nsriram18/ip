@@ -20,9 +20,9 @@
                 <Insets bottom="18.0" left="28.0" right="28.0" top="24.0" />
             </padding>
             <children>
-                <Label styleClass="eyebrow" text="RAMLY / TASK COMPANION" />
-                <Label styleClass="title" text="Make room for what matters." />
-                <Label styleClass="subtitle" text="A calm place for your next small win." />
+                <Label styleClass="eyebrow" text="PIP / POCKET PATHFINDER" />
+                <Label styleClass="title" text="One step at a time." />
+                <Label styleClass="subtitle" text="A calm trail through everything you need to do." />
             </children>
         </VBox>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vvalue="1.0"

@@ -23,7 +23,7 @@ public class Main extends Application {
             controller.setRamly(new Ramly(DEFAULT_FILE_PATH));
 
             Scene scene = new Scene(root);
-            stage.setTitle("Ramly · Your daily sidekick");
+            stage.setTitle("Pip · Pocket Pathfinder");
             stage.setMinWidth(520);
             stage.setMinHeight(680);
             stage.setScene(scene);

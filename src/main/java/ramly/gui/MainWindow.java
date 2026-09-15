@@ -25,14 +25,14 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private final Image userImage = new Image(MainWindow.class.getResourceAsStream("/images/human-face.png"));
-    private final Image ramlyImage = new Image(MainWindow.class.getResourceAsStream("/images/robot-face.png"));
+    private final Image ramlyImage = new Image(MainWindow.class.getResourceAsStream("/images/pip-firefly.png"));
     private Ramly ramly;
 
     /** Binds the scroll position to the growing conversation, as in the tutorial. */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        addRamlyDialog("Hello! I’m Ramly, your tiny but mighty task sidekick.\n"
+        addRamlyDialog("Hey, I’m Pip—your pocket pathfinder.\n"
                 + "Try `todo`, `deadline`, `event`, `list`, `find`, `mark`, `unmark`, `delete`, `undo`, or `bye`.");
     }
 
@@ -63,7 +63,7 @@ public class MainWindow extends AnchorPane {
         if (isExit) {
             userInput.setDisable(true);
             sendButton.setDisable(true);
-            userInput.setPromptText("Ramly has signed off for now");
+            userInput.setPromptText("Pip has left the trail for now");
         }
     }
 

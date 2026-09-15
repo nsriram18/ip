@@ -18,7 +18,7 @@ public abstract class AddTaskCommand extends Command {
             assert task != null : "Add-task commands must create a task";
             tasks.add(task);
             storage.save(tasks);
-            ui.show("Received! I've added this task:",
+            ui.show("Trail marker set! I've added this task:",
                     " " + task,
                     "Now you have " + tasks.size() + " tasks in the list.");
         } catch (java.time.format.DateTimeParseException e) {

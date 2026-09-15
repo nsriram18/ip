@@ -2,9 +2,9 @@ package ramly.model;
 
 /** Identifies the supported task categories and their display metadata. */
 public enum TaskType {
-    TODO("[T]", "T"),
-    DEADLINE("[D]", "D"),
-    EVENT("[E]", "E");
+    TODO("[•]", "T"),
+    DEADLINE("[⏳]", "D"),
+    EVENT("[◆]", "E");
 
     private final String icon;
     private final String code;

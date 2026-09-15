@@ -1,10 +1,9 @@
-# Duke User Guide
-
-// Update the title above to match the actual product name
+# Pip User Guide
 
 // Product screenshot goes here
 
-// Product intro goes here
+Pip is a calm pocket pathfinder that helps you keep everyday tasks on a clear trail. Its warm, concise responses
+celebrate progress without changing the familiar command workflow.
 
 ## Adding deadlines
 
@@ -34,19 +33,19 @@ undo
 Expected undo output:
 
 ```text
-Okay, I've removed the task added by the previous command:
- [T][ ] buy milk
+One step back—I've removed the task you added:
+ [•][ ] buy milk
 Now you have 0 tasks in the list.
 ```
 
 Only one command can be undone. Read-only commands such as `list` and `find`, as well as invalid commands, do not
-replace the available undo. If there is nothing to undo, Ramly displays:
+replace the available undo. If there is nothing to undo, Pip displays:
 
 ```text
-There is no command to undo.
+No steps to retrace yet.
 ```
 
-Undo history lasts only for the current application session and is cleared when Ramly restarts.
+Undo history lasts only for the current application session and is cleared when Pip restarts.
 
 ## Feature ABC
 

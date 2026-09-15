@@ -22,7 +22,7 @@ public class Task {
 
     /** Returns the display icon corresponding to the completion state. */
     public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]"); // mark done task with X
+        return isDone ? "[✓]" : "[ ]";
     }
 
     /** Marks this task as completed. */

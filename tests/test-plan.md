@@ -2,9 +2,9 @@
 
 ## Setup
 
-1. Start Ramly with an empty task data file.
+1. Start Pip with an empty task data file.
 2. Enter each command exactly as shown.
-3. Restart Ramly or restore the empty data file before each test case unless the steps say otherwise.
+3. Restart Pip or restore the empty data file before each test case unless the steps say otherwise.
 
 ## Command parsing and validation
 
@@ -13,20 +13,21 @@
 1. Enter `todo buy milk`.
 2. Enter `undo`.
 
-Expected: Ramly removes `buy milk` and reports that the list contains zero tasks.
+Expected: Pip displays `One step back—I've removed the task you added:`, removes `buy milk`, and reports that the
+list contains zero tasks.
 
 ### Undo with arguments
 
 1. Enter `undo 1`.
 
-Expected: Ramly displays `Please use the correct command format.`
+Expected: Pip displays `Please use the correct command format.`
 
 ### Incorrect capitalization
 
 1. Enter `Undo`.
 2. Enter `UNDO`.
 
-Expected: Ramly displays its unknown-command message after each command.
+Expected: Pip displays `I lost that trail. Check the command and try again!` after each command.
 
 ## Undoing task additions
 
@@ -96,20 +97,20 @@ Expected: Only `second` is removed.
 1. Add a task.
 2. Enter `undo` twice.
 
-Expected: The first undo removes the task. The second displays `There is no command to undo.`
+Expected: The first undo removes the task. The second displays `No steps to retrace yet.`
 
 ### Session-only history
 
 1. Add a task.
-2. Restart Ramly.
+2. Restart Pip.
 3. Enter `undo`.
 
-Expected: Ramly displays `There is no command to undo.` The task remains loaded from storage.
+Expected: Pip displays `No steps to retrace yet.` The task remains loaded from storage.
 
 ## Persistence and compatibility
 
 1. Undo each supported mutation and inspect the task data file.
-2. Start Ramly using a task data file created before C-Undo.
+2. Start Pip using a task data file created before C-Undo.
 
 Expected: Successful undo operations are saved immediately. The existing todo, deadline, and event record formats are
 unchanged, and no undo-history record or separate history file is created.
@@ -120,4 +121,4 @@ unchanged, and no undo-history record or separate history file is created.
 2. Confirm that the welcome message lists `undo`.
 3. Execute an undo through the existing command field.
 
-Expected: No new GUI control is present, and all undo response lines appear in one Ramly dialog bubble.
+Expected: No new GUI control is present, and all undo response lines appear in one Pip dialog bubble.
