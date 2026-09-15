@@ -20,6 +20,6 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
 
 ## Building the application
 
-Run `./gradlew clean check shadowJar` to verify the project and create `build/libs/pip.jar`. The JAR includes the
-JavaFX native libraries for the operating system and processor architecture on which it is built. Build a separate
-JAR on each target platform rather than copying one JAR between incompatible platforms.
+Run `./gradlew clean check shadowJar` to verify the project and create `build/libs/pip.jar`. The fat JAR includes
+the JavaFX libraries for Windows, macOS, and Linux so the same artifact can be used across the three supported
+operating systems on Java 25.

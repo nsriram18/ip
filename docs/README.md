@@ -8,7 +8,7 @@ events; find and update them; or retrace your latest step with `undo`.
 ## Quick start
 
 1. Ensure that **Java 25** is installed on your computer.
-1. Place a `pip.jar` built for your operating system and processor in a folder of your choice.
+1. Place `pip.jar` in a folder of your choice.
 1. Open a terminal in that folder and run:
 
    ```shell

@@ -20,23 +20,10 @@ repositories {
 
 dependencies {
     String javaFxVersion = '17.0.7'
-    String osName = System.getProperty('os.name').toLowerCase()
-    String architecture = System.getProperty('os.arch').toLowerCase()
-    String javaFxPlatform
-    if (osName.contains('mac')) {
-        javaFxPlatform = architecture.contains('aarch64') || architecture.contains('arm64')
-                ? 'mac-aarch64' : 'mac'
-    } else if (osName.contains('win')) {
-        javaFxPlatform = 'win'
-    } else if (osName.contains('linux')) {
-        javaFxPlatform = architecture.contains('aarch64') || architecture.contains('arm64')
-                ? 'linux-aarch64' : 'linux'
-    } else {
-        throw new GradleException("Unsupported JavaFX platform: ${osName} ${architecture}")
-    }
-
     ['base', 'controls', 'fxml', 'graphics'].each { moduleName ->
-        implementation("org.openjfx:javafx-${moduleName}:${javaFxVersion}:${javaFxPlatform}")
+        ['win', 'mac', 'linux'].each { platform ->
+            implementation("org.openjfx:javafx-${moduleName}:${javaFxVersion}:${platform}")
+        }
     }
 
     String jUnitVersion = '5.14.4'
