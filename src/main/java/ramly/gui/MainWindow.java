@@ -1,5 +1,7 @@
 package ramly.gui;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +26,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private final Image userImage = new Image(MainWindow.class.getResourceAsStream("/images/human-face.png"));
-    private final Image ramlyImage = new Image(MainWindow.class.getResourceAsStream("/images/pip-firefly.png"));
+    private final Image userImage = loadImage("/images/human-face.png");
+    private final Image ramlyImage = loadImage("/images/pip-firefly.png");
     private Ramly ramly;
 
     /** Binds the scroll position to the growing conversation, as in the tutorial. */
@@ -38,7 +40,12 @@ public class MainWindow extends AnchorPane {
 
     /** Injects the command engine used by both the GUI and text interfaces. */
     public void setRamly(Ramly ramly) {
+        assert ramly != null : "Command engine must not be null";
         this.ramly = ramly;
+        ramly.getStartupMessages().forEach(this::addRamlyDialog);
+        if (!ramly.isStorageAvailable()) {
+            disableInput("Task storage is unavailable");
+        }
     }
 
     /** Processes text entered by the user and appends the conversation to the window. */
@@ -61,9 +68,26 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         if (isExit) {
-            userInput.setDisable(true);
-            sendButton.setDisable(true);
-            userInput.setPromptText("Pip has left the trail for now");
+            disableInput("Pip has left the trail for now");
+        }
+    }
+
+    /** Disables command entry and explains why it is unavailable. */
+    private void disableInput(String promptText) {
+        userInput.setDisable(true);
+        sendButton.setDisable(true);
+        userInput.setPromptText(promptText);
+    }
+
+    /** Loads a required packaged image or fails with a descriptive startup error. */
+    private static Image loadImage(String resourcePath) {
+        try (InputStream stream = MainWindow.class.getResourceAsStream(resourcePath)) {
+            if (stream == null) {
+                throw new IllegalStateException("Missing GUI image resource: " + resourcePath);
+            }
+            return new Image(stream);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to close GUI image resource: " + resourcePath, e);
         }
     }
 

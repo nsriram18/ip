@@ -13,16 +13,12 @@ public abstract class AddTaskCommand extends Command {
     /** Creates, saves, and reports the newly created task. */
     @Override
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
-        try {
-            Task task = createTask();
-            assert task != null : "Add-task commands must create a task";
-            tasks.add(task);
-            storage.save(tasks);
-            ui.show("Trail marker set! I've added this task:",
-                    " " + task,
-                    "Now you have " + tasks.size() + " tasks in the list.");
-        } catch (java.time.format.DateTimeParseException e) {
-            ui.show("Please enter the deadline date as yyyy-MM-dd or d/M/yyyy HHmm.");
-        }
+        Task task = createTask();
+        assert task != null : "Add-task commands must create a task";
+        tasks.add(task);
+        storage.save(tasks);
+        ui.show("Trail marker set! I've added this task:",
+                " " + task,
+                "Now you have " + tasks.size() + " tasks in the list.");
     }
 }

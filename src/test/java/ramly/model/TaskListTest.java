@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import ramly.exception.TaskValidationException;
+
 /** Tests task collection mutation and access. */
 public class TaskListTest {
     @Test
@@ -63,6 +65,33 @@ public class TaskListTest {
         TaskList tasks = new TaskList(new ArrayList<>());
 
         assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
+
+    @Test
+    public void add_normalizedDuplicate_throwsValidationException() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(new Todo("Read   Book"));
+
+        assertThrows(TaskValidationException.class, () -> tasks.add(new Todo("read book")));
+    }
+
+    @Test
+    public void add_sameDescriptionWithDifferentDeadline_addsBoth() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(new Deadline("submit", "2026-10-01"));
+
+        tasks.add(new Deadline("submit", "2026-10-02"));
+
+        assertEquals(2, tasks.size());
+    }
+
+    @Test
+    public void add_sameEventUsingDifferentDateFormats_throwsValidationException() {
+        TaskList tasks = new TaskList(new ArrayList<>());
+        tasks.add(new Event("meeting", "2026-10-01 0900", "2026-10-01 1000"));
+
+        assertThrows(TaskValidationException.class,
+                () -> tasks.add(new Event("MEETING", "1/10/2026 0900", "1/10/2026 1000")));
     }
 
     @Test

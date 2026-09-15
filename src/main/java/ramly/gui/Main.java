@@ -1,6 +1,7 @@
 package ramly.gui;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            URL viewResource = Main.class.getResource("/view/MainWindow.fxml");
+            if (viewResource == null) {
+                throw new IllegalStateException("Missing GUI layout resource: /view/MainWindow.fxml");
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader(viewResource);
             AnchorPane root = fxmlLoader.load();
             MainWindow controller = fxmlLoader.getController();
             controller.setRamly(new Ramly(DEFAULT_FILE_PATH));

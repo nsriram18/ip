@@ -6,6 +6,7 @@ import ramly.model.Task;
 import ramly.model.TaskList;
 import ramly.storage.Storage;
 import ramly.ui.Ui;
+import ramly.validation.InputValidator;
 
 /** Command that displays tasks whose descriptions contain a keyword. */
 public class FindCommand extends Command {
@@ -13,7 +14,7 @@ public class FindCommand extends Command {
 
     /** Creates a find command for the supplied keyword. */
     public FindCommand(String keyword) {
-        this.keyword = keyword;
+        this.keyword = InputValidator.normalizeKeyword(keyword);
     }
 
     /** Displays all matching tasks with their original list numbers. */

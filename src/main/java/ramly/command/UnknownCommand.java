@@ -1,6 +1,5 @@
 package ramly.command;
 
-import ramly.exception.RamlyException;
 import ramly.model.TaskList;
 import ramly.storage.Storage;
 import ramly.ui.Ui;
@@ -10,6 +9,6 @@ public class UnknownCommand extends Command {
     /** Displays the unknown-command response. */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.show(new RamlyException().randomWord());
+        ui.show("I lost that trail. Check the command and try again!");
     }
 }

@@ -1,6 +1,6 @@
 package ramly.command;
 
-import ramly.exception.RamlyException;
+import ramly.exception.TaskValidationException;
 import ramly.model.Task;
 import ramly.model.TaskList;
 import ramly.storage.Storage;
@@ -9,20 +9,11 @@ import ramly.ui.Ui;
 /** Shared workflow for commands that change a task's completion state. */
 public abstract class TaskStateCommand extends Command {
     private final int taskIndex;
-    private final boolean invalidNumber;
 
-    protected TaskStateCommand(String command, int prefixLength) {
-        int parsedIndex;
-        boolean parseFailed;
-        try {
-            parsedIndex = Integer.parseInt(command.substring(prefixLength).trim()) - 1;
-            parseFailed = false;
-        } catch (NumberFormatException e) {
-            parsedIndex = -1;
-            parseFailed = true;
-        }
-        taskIndex = parsedIndex;
-        invalidNumber = parseFailed;
+    /** Creates a state command for a validated zero-based task index. */
+    protected TaskStateCommand(int taskIndex) {
+        assert taskIndex >= 0 : "Task index must not be negative";
+        this.taskIndex = taskIndex;
     }
 
     /** Applies the concrete completion-state change and returns the affected task. */
@@ -33,16 +24,13 @@ public abstract class TaskStateCommand extends Command {
     /** Validates, updates, saves, and reports the selected task. */
     @Override
     public final void execute(TaskList tasks, Ui ui, Storage storage) {
-        if (invalidNumber) {
-            ui.show(new RamlyException().notANumber());
-            return;
-        }
         try {
             Task task = update(tasks, taskIndex);
             storage.save(tasks);
             ui.show(successMessage(), " " + task);
         } catch (IndexOutOfBoundsException e) {
-            ui.show(new RamlyException().invalidNumber());
+            throw new TaskValidationException(
+                    "That trail marker doesn't exist. Use list to check the available numbers.");
         }
     }
 }

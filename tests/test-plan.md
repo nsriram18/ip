@@ -1,4 +1,4 @@
-# C-Undo Test Plan
+# Pip Error Handling and C-Undo Test Plan
 
 ## Setup
 
@@ -20,7 +20,7 @@ list contains zero tasks.
 
 1. Enter `undo 1`.
 
-Expected: Pip displays `Please use the correct command format.`
+Expected: Pip displays `Use this format: undo`.
 
 ### Incorrect capitalization
 
@@ -114,6 +114,93 @@ Expected: Pip displays `No steps to retrace yet.` The task remains loaded from s
 
 Expected: Successful undo operations are saved immediately. The existing todo, deadline, and event record formats are
 unchanged, and no undo-history record or separate history file is created.
+
+## Flexible command whitespace
+
+1. Enter `  todo   buy    milk  `.
+2. Enter `list`.
+
+Expected: Pip accepts the command and displays one task named `buy milk`.
+
+Repeat representative commands using tabs between their parts. Expected: tabs are treated as separators.
+
+## Missing, repeated, and misplaced parameters
+
+Enter each of the following independently:
+
+- `todo`
+- `deadline report`
+- `deadline report /by`
+- `deadline report /by 2026-10-01 /by 2026-10-02`
+- `event meeting /from 2026-10-01 0900`
+- `event meeting /to 2026-10-01 1000 /from 2026-10-01 0900`
+- `event meeting /from 2026-10-01 0900 /to 2026-10-01 1000 /to later`
+- `find`
+- `list extra`
+- `bye now`
+
+Expected: Pip rejects every command with a message showing the valid format. The task list and undo history remain
+unchanged.
+
+## Task-number validation
+
+Try `mark 0`, `mark -1`, `mark 1.5`, `delete +1`, `unmark two`, an integer larger than Java's supported integer
+range, and a positive number greater than the number of tasks.
+
+Expected: Pip distinguishes an invalid number, a number that is too large, and a valid number that does not identify
+an existing task. No task changes state.
+
+## Text validation
+
+1. Try descriptions containing `|`, line breaks, or control characters.
+2. Try a description longer than 200 characters.
+3. Try a find keyword longer than 100 characters.
+4. Try a command longer than 500 characters.
+5. Add `todo Buy Milk`, then try `todo buy   milk`.
+
+Expected: Pip rejects unsafe or oversized input with a specific explanation. The second todo is rejected as a
+normalized duplicate, while the first remains available to undo.
+
+## Date and event validation
+
+1. Enter `deadline report /by 2026-02-30`.
+2. Enter an event with an impossible boundary date.
+3. Enter an event whose start equals its end.
+4. Enter an event whose start is after its end.
+5. Enter a valid event using `yyyy-MM-dd HHmm`, then another using `d/M/yyyy HHmm`.
+
+Expected: The first four commands are rejected without changing storage. Both valid formats are accepted when the
+start is earlier than the end.
+
+## Storage errors and recovery
+
+### Missing storage
+
+Start Pip when the configured directory and task file do not exist.
+
+Expected: Pip creates both and starts with an empty task list.
+
+### Malformed storage
+
+Prepare a file containing valid records mixed with an unknown type, invalid completion status, missing or extra
+fields, impossible date, reversed parseable event range, and duplicate task.
+
+Expected: Pip loads valid unique records, reports every skipped line number, and creates a neighboring `.bak` copy
+that preserves the original file exactly. Legacy free-text event records still load.
+
+### Unavailable storage
+
+Start Pip with a directory in place of the task file or with a file that cannot be read.
+
+Expected: Pip reports the storage problem and does not accept commands that could create an unpersisted state. The
+GUI input is disabled.
+
+### Failed save
+
+Cause a write failure, then attempt a task mutation.
+
+Expected: Pip reports `No changes were applied.` The task list, data file, and previously available undo command all
+remain in their pre-command state. No partial data file replaces the original.
 
 ## GUI
 

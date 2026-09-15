@@ -1,9 +1,11 @@
 package ramly.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -41,5 +43,12 @@ public class UiTest {
 
         assertTrue(messages.contains("Hey, I'm Pip—your pocket pathfinder."));
         assertTrue(messages.contains("What shall we tackle next?"));
+    }
+
+    @Test
+    public void readCommand_endOfInput_returnsNull() {
+        Ui ui = new Ui(new ByteArrayInputStream(new byte[0]), message -> { });
+
+        assertNull(ui.readCommand());
     }
 }

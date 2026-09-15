@@ -1,5 +1,9 @@
 package ramly.model;
 
+import java.util.Locale;
+
+import ramly.validation.InputValidator;
+
 /** Represents a task with a description, type, and completion state. */
 public class Task {
     protected String description;
@@ -10,7 +14,7 @@ public class Task {
     public Task(String description, TaskType type) {
         assert description != null : "Task description must not be null";
         assert type != null : "Task type must not be null";
-        this.description = description;
+        this.description = InputValidator.normalizeDescription(description);
         this.isDone = false;
         this.type = type;
     }
@@ -18,6 +22,19 @@ public class Task {
     /** Returns this task's type. */
     public TaskType getType() {
         return this.type;
+    }
+
+    /** Returns whether another task has the same normalized identifying fields. */
+    public boolean hasSameIdentity(Task other) {
+        if (other == null || type != other.type) {
+            return false;
+        }
+        return normalizedDescription().equals(other.normalizedDescription());
+    }
+
+    /** Returns the normalized description used when detecting duplicates. */
+    protected String normalizedDescription() {
+        return description.toLowerCase(Locale.ROOT).replaceAll("\\s+", " ").strip();
     }
 
     /** Returns the display icon corresponding to the completion state. */

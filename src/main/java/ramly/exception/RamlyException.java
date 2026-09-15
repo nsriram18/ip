@@ -1,41 +1,47 @@
 package ramly.exception;
 
-/** Provides user-facing messages for invalid Ramly commands. */
+/** Provides legacy user-facing messages for invalid commands. */
 public class RamlyException extends Exception {
+    private final String commandName;
 
-    protected String s;
     /** Creates an exception for a specific command category. */
-    public RamlyException(String s) {
-        this.s = s;
+    public RamlyException(String commandName) {
+        this.commandName = commandName;
     }
+
     /** Creates a general command exception. */
     public RamlyException() {
+        this("");
     }
 
+    /** Returns the unknown-command message. */
     public String randomWord() {
         return "I lost that trail. Check the command and try again!";
     }
 
+    /** Returns a missing-description message. */
     public String emptyString() {
-        return "That " + this.s + " needs a description before we set off. Try again!";
+        return "That " + commandName + " needs a description before we set off. Try again!";
     }
 
+    /** Returns an invalid-number message. */
     public String notANumber() {
         return "That isn't a trail-marker number. Try again with a number!";
     }
 
+    /** Returns an out-of-range task-number message. */
     public String invalidNumber() {
         return "That trail marker doesn't exist. Use list to check the available numbers.";
     }
 
+    /** Returns the usage message for a supported structured command. */
     public String correctFormat() {
-        if (this.s == "deadline") {
-            return "Please use the correct format to log a deadline.\n" +
-                    "deadline <description> /by <yyyy-mm-dd>";
-        } else if (this.s == "event") {
-            return "Please use the correct format to log a event.\n" +
-                    "deadline <description> /from <Day/Date/Time> /to <Day/Date/Time>";
+        if (commandName.equals("deadline")) {
+            return "Use this format: deadline <description> /by <date or date-time>";
         }
-        return null;
+        if (commandName.equals("event")) {
+            return "Use this format: event <description> /from <date-time> /to <date-time>";
+        }
+        return "Please use a supported command format.";
     }
 }

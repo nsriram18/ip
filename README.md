@@ -17,3 +17,9 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
 1. After that, locate the `src/main/java/ramly/gui/Launcher.java` file, right-click it, and choose `Run Launcher.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see Pip's task window.
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Building the application
+
+Run `./gradlew clean check shadowJar` to verify the project and create `build/libs/pip.jar`. The JAR includes the
+JavaFX native libraries for the operating system and processor architecture on which it is built. Build a separate
+JAR on each target platform rather than copying one JAR between incompatible platforms.

@@ -5,9 +5,9 @@ import ramly.model.TaskList;
 
 /** Command that marks a task as done. */
 public class MarkCommand extends TaskStateCommand {
-    /** Creates a mark command from raw user input. */
-    public MarkCommand(String command) {
-        super(command, 5);
+    /** Creates a mark command for a validated zero-based task index. */
+    public MarkCommand(int taskIndex) {
+        super(taskIndex);
     }
 
     /** Marks the selected task as completed. */

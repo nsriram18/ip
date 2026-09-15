@@ -2,12 +2,30 @@ package ramly.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.stream.Collectors;
+
+import ramly.exception.TaskValidationException;
 
 /** Owns the collection of tasks and its basic operations. */
 public class TaskList implements Iterable<Task> {
     private final ArrayList<Task> tasks;
     private UndoOperation undoOperation;
+
+    /** Captures task membership, completion states, and undo history for rollback. */
+    public static final class State {
+        private final ArrayList<Task> tasks;
+        private final ArrayList<Boolean> completionStates;
+        private final UndoOperation undoOperation;
+
+        private State(ArrayList<Task> tasks, UndoOperation undoOperation) {
+            this.tasks = new ArrayList<>(tasks);
+            this.completionStates = tasks.stream()
+                    .map(task -> task.isDone)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            this.undoOperation = undoOperation;
+        }
+    }
 
     /** Reverses one task-list mutation and describes its result. */
     @FunctionalInterface
@@ -35,6 +53,9 @@ public class TaskList implements Iterable<Task> {
     /** Adds a task to the collection. */
     public void add(Task task) {
         assert task != null : "Added task must not be null";
+        if (tasks.stream().anyMatch(existingTask -> existingTask.hasSameIdentity(task))) {
+            throw new TaskValidationException("That exact task is already on your trail.");
+        }
         int addedIndex = tasks.size();
         tasks.add(task);
         undoOperation = () -> {
@@ -96,15 +117,37 @@ public class TaskList implements Iterable<Task> {
     /** Returns tasks whose descriptions contain the keyword, ignoring case. */
     public ArrayList<Task> find(String keyword) {
         assert keyword != null : "Search keyword must not be null";
-        String normalizedKeyword = keyword.toLowerCase();
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
         return tasks.stream()
-                .filter(task -> task.description.toLowerCase().contains(normalizedKeyword))
+                .filter(task -> task.description.toLowerCase(Locale.ROOT).contains(normalizedKeyword))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /** Returns the zero-based position of a task, or -1 if it is absent. */
     public int indexOf(Task task) {
         return tasks.indexOf(task);
+    }
+
+    /** Captures the current state so a failed persistence operation can be rolled back. */
+    public State createSnapshot() {
+        return new State(tasks, undoOperation);
+    }
+
+    /** Restores a previously captured state after a failed persistence operation. */
+    public void restoreSnapshot(State state) {
+        assert state != null : "Restored task-list state must not be null";
+        assert state.tasks.size() == state.completionStates.size()
+                : "Every restored task must have a completion state";
+        tasks.clear();
+        tasks.addAll(state.tasks);
+        for (int i = 0; i < tasks.size(); i++) {
+            if (state.completionStates.get(i)) {
+                tasks.get(i).mark();
+            } else {
+                tasks.get(i).unmark();
+            }
+        }
+        undoOperation = state.undoOperation;
     }
 
     @Override

@@ -5,9 +5,9 @@ import ramly.model.TaskList;
 
 /** Command that marks a task as not done. */
 public class UnmarkCommand extends TaskStateCommand {
-    /** Creates an unmark command from raw user input. */
-    public UnmarkCommand(String command) {
-        super(command, 7);
+    /** Creates an unmark command for a validated zero-based task index. */
+    public UnmarkCommand(int taskIndex) {
+        super(taskIndex);
     }
 
     /** Marks the selected task as incomplete. */
